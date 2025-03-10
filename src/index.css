@@ -1,3 +1,9 @@
+/* 
+ * This file uses Tailwind CSS directives (@tailwind, @layer, @apply)
+ * If you're seeing linting errors, it's because your editor doesn't recognize Tailwind syntax.
+ * These errors don't affect functionality when processed through PostCSS with Tailwind.
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

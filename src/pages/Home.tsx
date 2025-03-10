@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -36,7 +36,7 @@ const specialties = [
     id: 3,
     name: "Frites Truffe",
     description: "Frites maison à l'huile de truffe et parmesan",
-    image: "https://images.unsplash.com/photo-1630384060421-cb20d0e70989?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",
     menuCategory: "Sides",
     menuItemId: "truffle-fries"
   },
@@ -62,14 +62,31 @@ export default function Home() {
   const specialtiesRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const checkScrollability = () => {
     if (specialtiesRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = specialtiesRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      
+      // Calculate active index based on scroll position
+      const itemWidth = 280; // Width of each specialty item + gap
+      const newActiveIndex = Math.round(scrollLeft / itemWidth);
+      if (newActiveIndex !== activeIndex) {
+        setActiveIndex(newActiveIndex);
+      }
     }
   };
+
+  // Add scroll event listener to track position
+  useEffect(() => {
+    const scrollContainer = specialtiesRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', checkScrollability);
+      return () => scrollContainer.removeEventListener('scroll', checkScrollability);
+    }
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (specialtiesRef.current) {
@@ -141,16 +158,21 @@ export default function Home() {
 
       {/* Specialties Slider Section */}
       <motion.section 
-        className="py-12"
+        className="py-16 sm:py-20 relative" 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
+        transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226]">
+          <div className="flex justify-between items-center mb-0">
+            <motion.h2 
+              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
               Nos Spécialités
-            </h2>
+            </motion.h2>
             
             <div className="hidden md:flex space-x-2">
               <motion.button
@@ -175,42 +197,74 @@ export default function Home() {
           </div>
           
           <div 
-            className="relative"
+            className="relative pt-6 pb-4" 
             onMouseEnter={checkScrollability}
+            style={{ zIndex: 1 }}
           >
             <div 
               ref={specialtiesRef} 
-              className="flex space-x-4 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              className="flex space-x-4 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory relative"
+              style={{ 
+                scrollbarWidth: 'none', 
+                msOverflowStyle: 'none'
+              }}
               onScroll={checkScrollability}
             >
               {specialties.map((specialty, index) => (
-                <motion.div
+                <div
                   key={specialty.id}
-                  className="flex-shrink-0 w-[250px] sm:w-[280px] snap-center"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                  whileHover={{ y: -5 }}
+                  className="flex-shrink-0 w-[250px] sm:w-[280px] snap-center relative"
+                  style={{ isolation: 'isolate' }}
                 >
-                  <div className="bg-white rounded-xl shadow-md overflow-hidden h-full">
-                    <img 
-                      src={specialty.image} 
-                      alt={specialty.name} 
-                      className="w-full h-36 sm:h-48 object-cover"
-                    />
-                    <div className="p-3 sm:p-4">
-                      <h3 className="text-base sm:text-lg font-bold text-[#9b2226] mb-1 sm:mb-2">{specialty.name}</h3>
-                      <p className="text-gray-600 text-xs sm:text-sm">{specialty.description}</p>
-                      <Link 
-                        to={`/menu?category=${specialty.menuCategory}&item=${specialty.menuItemId}`} 
-                        className="mt-2 sm:mt-3 inline-block text-xs sm:text-sm font-medium text-[#9b2226] hover:underline"
-                      >
-                        Voir sur le menu
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
+                  <Link 
+                    to={`/menu?category=${specialty.menuCategory}&item=${specialty.menuItemId}`}
+                    className="block h-full rounded-xl"
+                    style={{ position: 'relative', zIndex: 10, transformStyle: 'preserve-3d' }}
+                  >
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      whileHover={{ 
+                        y: -5, 
+                        zIndex: 999, 
+                        boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
+                      }}
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-white rounded-xl shadow-xl overflow-hidden h-full"
+                      style={{
+                        willChange: 'transform',
+                        position: 'relative',
+                        transformOrigin: 'center center',
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        borderRadius: '0.75rem', // Explicitly define border radius
+                      }}
+                    >
+                      <div className="relative overflow-hidden rounded-t-xl">
+                        <img 
+                          src={specialty.image} 
+                          alt={specialty.name} 
+                          className="w-full h-36 sm:h-48 object-cover"
+                          style={{ 
+                            transform: 'translateZ(0)',
+                            borderTopLeftRadius: '0.75rem',
+                            borderTopRightRadius: '0.75rem',
+                          }}
+                        />
+                      </div>
+                      <div className="p-4 sm:p-5">
+                        <h3 className="text-base sm:text-lg font-bold text-[#9b2226] mb-1 sm:mb-2">{specialty.name}</h3>
+                        <p className="text-gray-600 text-xs sm:text-sm">{specialty.description}</p>
+                        <span 
+                          className="mt-3 sm:mt-4 inline-block text-xs sm:text-sm font-medium text-[#9b2226] hover:underline"
+                        >
+                          Voir sur le menu
+                        </span>
+                      </div>
+                    </motion.div>
+                  </Link>
+                </div>
               ))}
             </div>
             
@@ -219,7 +273,9 @@ export default function Home() {
               {specialties.map((_, index) => (
                 <motion.div
                   key={index}
-                  className={`w-2 h-2 rounded-full ${index === 0 ? 'bg-[#9b2226]' : 'bg-gray-300'}`}
+                  className={`w-2 h-2 rounded-full ${index === activeIndex ? 'bg-[#9b2226]' : 'bg-gray-300'}`}
+                  animate={{ scale: index === activeIndex ? 1.2 : 1 }}
+                  transition={{ duration: 0.2 }}
                 ></motion.div>
               ))}
             </div>
@@ -229,25 +285,36 @@ export default function Home() {
 
       {/* News Section */}
       <motion.section 
-        className="py-12 bg-[#f9f5f0]"
+        className="py-12 bg-[#f9f5f0] relative"
+        style={{ zIndex: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.9 }}
+        transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226] text-center mb-10">
+          <motion.h2 
+            className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226] text-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             Nos Actualités
-          </h2>
+          </motion.h2>
           
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto relative z-10">
             {newsItems.map((news, index) => (
               <motion.div
                 key={news.id}
-                className="bg-white rounded-xl shadow-md overflow-hidden"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
-                whileHover={{ y: -5 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ 
+                  y: -5,
+                  zIndex: 100,
+                  boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
+                }}
+                className="bg-white rounded-xl shadow-xl overflow-hidden"
+                style={{ willChange: 'transform' }}
               >
                 <img 
                   src={news.image} 
