@@ -6,26 +6,20 @@
   <title>Craft Burger Co.</title>
   <script type="text/javascript">
     (function() {
-      // Simple redirect to the index with hash for mobile compatibility
-      var l = window.location;
-      var pathSegmentsToKeep = 1; // Keep the repo name
-      var path = l.pathname.split('/').slice(0, pathSegmentsToKeep + 1).join('/');
+      // On récupère le chemin actuel
+      var path = window.location.pathname;
       
-      // Redirect to the root with proper hash fragment
-      var redirect = l.origin + path + '/#' + l.pathname.slice(path.length);
+      // On crée la redirection vers la page d'index avec le hash
+      var redirectUrl = window.location.origin + 
+                       (path.indexOf('/WebAppMenuReact') === 0 ? '/WebAppMenuReact' : '') + 
+                       '/#' + path.replace('/WebAppMenuReact', '');
       
-      // Log for debugging
-      console.log('404 redirect: ' + redirect);
+      // Log pour debug
+      console.log('Redirecting from:', path);
+      console.log('Redirecting to:', redirectUrl);
       
-      // Try both methods for maximum compatibility
-      try {
-        window.location.replace(redirect);
-        setTimeout(function() {
-          window.location.href = redirect;
-        }, 200);
-      } catch (e) {
-        window.location.href = redirect;
-      }
+      // Rediriger
+      window.location.replace(redirectUrl);
     })();
   </script>
 </head>

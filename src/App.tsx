@@ -8,9 +8,6 @@ import Contact from './pages/Contact';
 import SplashScreen from './components/SplashScreen';
 import ScrollToTop from './components/ScrollToTop';
 
-// Get the base URL from Vite environment or default to '/'
-const BASE_URL = import.meta.env.BASE_URL || '/';
-
 // Root component that shows the splash screen
 function RootComponent() {
   const navigate = useNavigate();
@@ -27,7 +24,6 @@ function RootComponent() {
 function AppContent() {
   const [showSplash, setShowSplash] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const redirectCountRef = useRef(0);
   
   useEffect(() => {

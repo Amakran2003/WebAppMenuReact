@@ -1,11 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const location = useLocation();
   const isMenuPage = location.pathname === '/menu';
+
+  // Détecter si on est sur desktop ou mobile
+  useEffect(() => {
+    const checkIfDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768); // 768px est le breakpoint "md" dans Tailwind
+    };
+    
+    // Vérification initiale
+    checkIfDesktop();
+    
+    // Mettre à jour à chaque changement de taille d'écran
+    window.addEventListener('resize', checkIfDesktop);
+    
+    return () => {
+      window.removeEventListener('resize', checkIfDesktop);
+    };
+  }, []);
 
   // Clean up any potential DOM issues from previous basket implementation
   useEffect(() => {
@@ -122,8 +140,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      {/* Footer - Only show if not on Menu page */}
-      {!isMenuPage && (
+      {/* Footer - Show on all pages on desktop, hide on menu page on mobile */}
+      {(!isMenuPage || (isMenuPage && isDesktop)) && (
         <footer className="bg-[#9b2226] text-white py-4 text-sm sm:text-base">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
             <p>&copy; 2025 Craft Burger Co. Tous droits réservés.</p>
