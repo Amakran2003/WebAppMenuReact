@@ -36,6 +36,16 @@
   .menu-price {
     @apply text-lg font-bold text-[#9b2226];
   }
+
+  /* Masquer la scrollbar tout en gardant la fonctionnalité */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 }
 
 /* Custom Animations */

@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.h1
-        className="text-4xl font-serif font-bold text-[#9b2226] text-center mb-12"
+        className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#9b2226] text-center mb-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -17,16 +17,16 @@ export default function Contact() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Contact Form */}
         <motion.div
-          className="bg-white rounded-xl shadow-lg p-6"
+          className="bg-white rounded-xl shadow-lg p-6 sm:p-8"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-2xl font-serif font-bold text-[#9b2226] mb-6">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#9b2226] mb-6">
             Envoyez-nous un message
           </h2>
           
-          <form className="space-y-4">
+          <form className="space-y-4 sm:space-y-6">
             <div>
               <label htmlFor="name" className="block text-gray-700 mb-2">
                 Nom
@@ -82,11 +82,11 @@ export default function Contact() {
           transition={{ duration: 0.5 }}
         >
           <div>
-            <h2 className="text-2xl font-serif font-bold text-[#9b2226] mb-6">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#9b2226] mb-6">
               Informations de Contact
             </h2>
             
-            <div className="space-y-4">
+            <div className="space-y-4 sm:space-y-6">
               <motion.div 
                 className="flex items-start gap-4"
                 whileHover={{ x: 10 }}
@@ -134,12 +134,15 @@ export default function Contact() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-serif font-bold text-[#9b2226] mb-6">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#9b2226] mb-6">
               Réservations
             </h2>
             <p className="text-gray-600 mb-4">
               Pour les réservations de groupe ou les événements spéciaux, 
               veuillez nous contacter par téléphone ou par email.
+            </p>
+            <p className="text-gray-600">
+              Nous vous répondrons dans les plus brefs délais pour confirmer votre réservation.
             </p>
           </div>
         </motion.div>

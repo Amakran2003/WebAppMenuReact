@@ -1,0 +1,56 @@
+.splash-screen {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #111; /* Adjust to match your app's theme */
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 100px; /* Smaller on mobile */
+  height: 100px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 640px) { /* sm breakpoint */
+  .logo {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (min-width: 1024px) { /* lg breakpoint */
+  .logo {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.splash-screen h1 {
+  color: #fff; /* Adjust to match your app's theme */
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+@media (min-width: 640px) { /* sm breakpoint */
+  .splash-screen h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) { /* lg breakpoint */
+  .splash-screen h1 {
+    font-size: 3rem;
+  }
+}

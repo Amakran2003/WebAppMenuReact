@@ -31,9 +31,9 @@ const restaurants = [
 
 export default function Restaurants() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <motion.h1
-        className="text-4xl font-serif font-bold text-[#9b2226] text-center mb-12"
+        className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#9b2226] text-center mb-8 sm:mb-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -41,11 +41,11 @@ export default function Restaurants() {
         Nos Restaurants
       </motion.h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {restaurants.map((restaurant, index) => (
           <motion.div
             key={restaurant.id}
-            className="bg-white rounded-xl shadow-lg overflow-hidden"
+            className="bg-white rounded-xl shadow-lg overflow-hidden h-full"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -54,26 +54,26 @@ export default function Restaurants() {
             <img
               src={restaurant.image}
               alt={restaurant.name}
-              className="w-full h-48 object-cover"
+              className="w-full h-48 sm:h-56 object-cover"
             />
-            <div className="p-6">
-              <h3 className="text-xl font-serif font-bold text-[#9b2226] mb-4">
+            <div className="p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-serif font-bold text-[#9b2226] mb-3 sm:mb-4">
                 {restaurant.name}
               </h3>
               
-              <div className="space-y-3 text-gray-600">
+              <div className="space-y-2 sm:space-y-3 text-gray-600 text-sm sm:text-base">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-[#9b2226]" />
-                  <span>{restaurant.address}</span>
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#9b2226] flex-shrink-0" />
+                  <span className="line-clamp-2">{restaurant.address}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-[#9b2226]" />
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-[#9b2226] flex-shrink-0" />
                   <span>{restaurant.hours}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <Phone className="w-5 h-5 text-[#9b2226]" />
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#9b2226] flex-shrink-0" />
                   <span>{restaurant.phone}</span>
                 </div>
               </div>
