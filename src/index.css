@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-gray-800;
+  }
+  
+  html {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  .menu-item {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-200 hover:-translate-y-1;
+  }
+  
+  .menu-image {
+    @apply w-full h-48 object-cover;
+  }
+  
+  .menu-content {
+    @apply p-4;
+  }
+  
+  .menu-title {
+    @apply text-xl font-serif font-bold text-[#9b2226] mb-2;
+  }
+  
+  .menu-description {
+    @apply text-gray-600 mb-4;
+  }
+  
+  .menu-price {
+    @apply text-lg font-bold text-[#9b2226];
+  }
+}
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#9b2226] rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-[#660708];
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
