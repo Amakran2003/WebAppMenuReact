@@ -4,17 +4,21 @@ import { motion } from 'framer-motion';
 import { Utensils } from 'lucide-react'; // Import Utensils icon from lucide-react
 import './SplashScreen.css';
 
-const SplashScreen = () => {
+interface SplashScreenProps {
+  redirectTo?: string;
+}
+
+const SplashScreen = ({ redirectTo = '/home' }: SplashScreenProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Automatically navigate to the home page after animation completes
+    // Automatically navigate to the specified page after animation completes
     const timer = setTimeout(() => {
-      navigate('/home', { replace: true });
+      navigate(redirectTo, { replace: true });
     }, 3000); // 3 seconds duration, adjust as needed
 
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [navigate, redirectTo]);
 
   return (
     <div className="splash-screen">
