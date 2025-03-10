@@ -19,77 +19,47 @@ interface MenuCategory {
 
 const menuCategories: MenuCategory[] = [
   {
-    name: 'Boissons',
+    name: 'Burgers',
     items: [
-      { id: 'the-vert', name: 'Thé vert', description: 'Thé japonais traditionnel', price: '3,50€', image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=800' },
-      { id: 'bubble-tea', name: 'Bubble Tea', description: 'Thé au lait avec perles de tapioca', price: '5,90€', image: 'https://images.unsplash.com/photo-1558857563-b371033873b8?auto=format&fit=crop&q=80&w=800' },
-      { id: 'sake', name: 'Saké', description: 'Alcool de riz japonais (12cl)', price: '7,50€', image: 'https://images.unsplash.com/photo-1579274482166-8f8ee2c5f399?auto=format&fit=crop&q=80&w=800' }
+      { id: 'classic-burger', name: 'Le Classique', description: 'Bœuf Black Angus, cheddar, bacon, laitue, tomate, oignon rouge, sauce maison', price: '14,90€', image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=80' },
+      { id: 'blue-burger', name: 'Le Blue', description: 'Bœuf Black Angus, fromage bleu, champignons caramélisés, roquette, sauce au poivre', price: '15,90€', image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80' },
+      { id: 'vege-burger', name: 'Le Végétarien', description: 'Galette de légumes, fromage de chèvre, avocat, roquette, tomate, sauce yaourt aux herbes', price: '13,90€', image: 'https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=800&q=80' },
+      { id: 'bbq-burger', name: 'Le BBQ', description: 'Bœuf Black Angus, cheddar fumé, oignons caramélisés, bacon grillé, sauce BBQ maison', price: '15,90€', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80' },
+      { id: 'spicy-burger', name: 'Le Spicy', description: 'Bœuf Black Angus, jalapeños, pepper jack, guacamole, oignons rouges, sauce chipotle', price: '15,90€', image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=800&q=80' }
     ]
   },
   {
-    name: 'Brunch',
+    name: 'Sides',
     items: [
-      // Boissons chaudes
-      { id: 'matcha-latte', name: 'Matcha Latte', description: 'Thé matcha et lait crémeux', price: '5,50€', image: 'https://images.unsplash.com/photo-1545518514-ce8448f54637?auto=format&fit=crop&q=80&w=800', category: 'Boissons chaudes' },
-      { id: 'cappuccino', name: 'Cappuccino', description: 'Double expresso et mousse de lait', price: '4,20€', image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&q=80&w=800', category: 'Boissons chaudes' },
-      
-      // Boissons froides
-      { id: 'iced-matcha', name: 'Matcha Glacé', description: 'Matcha glacé sur lit de lait', price: '5,90€', image: 'https://images.unsplash.com/photo-1536411396596-afed9fa3c1b2?auto=format&fit=crop&q=80&w=800', category: 'Boissons froides' },
-      { id: 'citron-ice-tea', name: 'Ice Tea Yuzu', description: 'Thé glacé parfumé au yuzu', price: '4,90€', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&q=80&w=800', category: 'Boissons froides' },
-      
-      // Smoothies
-      { id: 'mango-smoothie', name: 'Smoothie Mangue', description: 'Mangue, ananas et lait de coco', price: '6,50€', image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&q=80&w=800', category: 'Smoothies' },
-      { id: 'berry-smoothie', name: 'Smoothie Baies', description: 'Fruits rouges, banane et lait d\'amande', price: '6,50€', image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&q=80&w=800', category: 'Smoothies' },
-      
-      // Côté salé
-      { id: 'avocado-toast', name: 'Avocado Toast', description: 'Pain au levain, avocat et œuf poché', price: '11,90€', image: 'https://images.unsplash.com/photo-1603046891744-76e6e5ab1dbf?auto=format&fit=crop&q=80&w=800', category: 'Côté salé' },
-      { id: 'salmon-bagel', name: 'Bagel Saumon', description: 'Bagel, saumon fumé et cream cheese', price: '10,90€', image: 'https://images.unsplash.com/photo-1595422656744-42dbde91e534?auto=format&fit=crop&q=80&w=800', category: 'Côté salé' },
-      { id: 'dim-sum', name: 'Assortiment Dim Sum', description: 'Sélection de 8 dim sum vapeur', price: '12,90€', image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800', category: 'Côté salé' },
-      
-      // Côté sucré
-      { id: 'pancakes', name: 'Pancakes', description: 'Pancakes, fruits rouges et sirop d\'érable', price: '8,90€', image: 'https://images.unsplash.com/photo-1611146029964-553bc583bf1c?auto=format&fit=crop&q=80&w=800', category: 'Côté sucré' },
-      { id: 'french-toast', name: 'Pain Perdu', description: 'Pain perdu à la cannelle et fruits frais', price: '9,50€', image: 'https://images.unsplash.com/photo-1639108094328-2b94a49b1c2e?auto=format&fit=crop&q=80&w=800', category: 'Côté sucré' },
-      { id: 'acai-bowl', name: 'Açaí Bowl', description: 'Smoothie bowl açaí, granola et fruits frais', price: '10,50€', image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=800', category: 'Côté sucré' }
+      { id: 'fries', name: 'Frites Maison', description: 'Frites fraîches coupées à la main, sel de mer', price: '4,50€', image: 'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=800&q=80' },
+      { id: 'truffle-fries', name: 'Frites Truffe', description: 'Frites maison à l\'huile de truffe, parmesan râpé, persil', price: '6,50€', image: 'https://media.istockphoto.com/id/2140808381/photo/fries-with-parmesan-cheese-and-truffled-mayonnaise-sauce.webp?a=1&b=1&s=612x612&w=0&k=20&c=huWMm_nZ7Tha07t0F92gx7uwsYjO796F6peGpfEiz_E=' },
+      { id: 'onion-rings', name: 'Onion Rings', description: 'Rondelles d\'oignon panées et croustillantes', price: '5,50€', image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=800&q=80' },
+      { id: 'coleslaw', name: 'Coleslaw', description: 'Chou, carotte, oignon rouge, sauce crémeuse', price: '3,90€', image: 'https://images.unsplash.com/photo-1608039755401-742074f0548d?auto=format&fit=crop&w=800&q=80' }
     ]
   },
   {
-    name: 'Plats',
+    name: 'Drinks',
     items: [
-      { id: 'riz-saute', name: 'Riz sauté', description: 'Riz sauté aux légumes et œuf', price: '8,90€', image: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&q=80&w=800' },
-      { id: 'nouilles-sautees', name: 'Nouilles sautées', description: 'Nouilles sautées au poulet et légumes', price: '10,90€', image: 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&q=80&w=800' },
-      { id: 'gyoza', name: 'Gyoza', description: '6 raviolis japonais grillés', price: '6,90€', image: 'https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&q=80&w=800' }
-    ]
-  },
-  {
-    name: 'Sushis',
-    items: [
-      { id: 'maki-saumon', name: 'Maki Saumon', description: '6 pièces de maki au saumon', price: '5,90€', image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&q=80&w=800' },
-      { id: 'california-roll', name: 'California Roll', description: '6 pièces de california avocat-crabe', price: '6,90€', image: 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&q=80&w=800' },
-      { id: 'nigiri-mix', name: 'Nigiri Mix', description: '6 pièces variées de nigiri', price: '9,90€', image: 'https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&q=80&w=800' }
-    ]
-  },
-  {
-    name: 'Thai',
-    items: [
-      { id: 'pad-thai', name: 'Pad Thaï', description: 'Nouilles de riz sautées au poulet et cacahuètes', price: '12,90€', image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&q=80&w=800' },
-      { id: 'curry-vert', name: 'Curry vert', description: 'Curry vert au lait de coco et poulet', price: '13,90€', image: 'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&q=80&w=800' },
-      { id: 'tom-yum', name: 'Tom Yum', description: 'Soupe épicée aux crevettes et citronnelle', price: '8,90€', image: 'https://images.unsplash.com/photo-1548943487-a2e4e43b4853?auto=format&fit=crop&q=80&w=800' }
+      { id: 'craft-beer', name: 'Bière Artisanale', description: 'Sélection de bières locales (33cl)', price: '6,50€', image: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=800&q=80' },
+      { id: 'oreo-milkshake', name: 'Milkshake Oreo', description: 'Milkshake crémeux aux biscuits Oreo', price: '7,50€', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
+      { id: 'caramel-milkshake', name: 'Milkshake Caramel', description: 'Milkshake vanille au caramel salé maison', price: '7,50€', image: 'https://images.unsplash.com/photo-1624781740834-fbfce1c4690a?auto=format&fit=crop&w=800&q=80' },
+      { id: 'homemade-lemonade', name: 'Limonade Maison', description: 'Citron pressé, menthe fraîche, sucre de canne', price: '4,90€', image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=800&q=80' }
     ]
   },
   {
     name: 'Desserts',
     items: [
-      { id: 'mochi', name: 'Mochi', description: 'Gâteau de riz japonais fourré', price: '4,90€', image: 'https://images.unsplash.com/photo-1631206753348-db44968fd440?auto=format&fit=crop&q=80&w=800' },
-      { id: 'perles-coco', name: 'Perles de coco', description: 'Dessert thaïlandais aux perles de tapioca', price: '5,50€', image: 'https://images.unsplash.com/photo-1606243147559-cd6b1c323aaa?auto=format&fit=crop&q=80&w=800' },
-      { id: 'creme-brulee', name: 'Crème brûlée matcha', description: 'Crème brûlée parfumée au thé vert', price: '6,90€', image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&q=80&w=800' }
+      { id: 'cheesecake', name: 'Cheesecake', description: 'Cheesecake New York, coulis de fruits rouges', price: '6,90€', image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80' },
+      { id: 'brownie', name: 'Brownie', description: 'Brownie chocolat noir, noix de pécan, glace vanille', price: '7,50€', image: 'https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=800&q=80' },
+      { id: 'apple-pie', name: 'Tarte aux Pommes', description: 'Tarte aux pommes caramélisées, glace cannelle', price: '7,90€', image: 'https://images.unsplash.com/photo-1535920527002-b35e96722eb9?auto=format&fit=crop&w=800&q=80' }
     ]
   },
   {
-    name: 'Promos',
+    name: 'Menus',
     items: [
-      { id: 'menu-midi', name: 'Menu Midi', description: 'Plat + Boisson + Dessert', price: '14,90€', image: 'https://images.unsplash.com/photo-1617518468243-1e6e9403e3f2?auto=format&fit=crop&q=80&w=800' },
-      { id: 'combo-sushis', name: 'Combo Sushis', description: '12 pièces + Soupe miso', price: '16,90€', image: 'https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?auto=format&fit=crop&q=80&w=800' },
-      { id: 'formule-duo', name: 'Formule Duo', description: '2 plats + 2 desserts', price: '29,90€', image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&q=80&w=800' }
+      { id: 'menu-classic', name: 'Menu Classique', description: 'Burger + Frites + Boisson', price: '18,90€', image: 'https://images.unsplash.com/photo-1619881589970-3303f4446c53?auto=format&fit=crop&w=800&q=80' },
+      { id: 'menu-double', name: 'Menu Double', description: 'Double burger + Frites + Boisson', price: '22,90€', image: 'https://images.unsplash.com/photo-1610614819513-58e34989848b?auto=format&fit=crop&w=800&q=80' },
+      { id: 'menu-kids', name: 'Menu Enfant', description: 'Mini burger + Frites + Boisson + Surprise', price: '11,90€', image: 'https://images.unsplash.com/photo-1633896949673-1eb9d131a9b4?auto=format&fit=crop&w=800&q=80' }
     ]
   }
 ];
@@ -99,7 +69,7 @@ export default function Menu() {
   const categoryParam = searchParams.get('category');
   const itemParam = searchParams.get('item');
   
-  const [activeCategory, setActiveCategory] = useState('Plats');
+  const [activeCategory, setActiveCategory] = useState('Burgers');
   const [highlightedItem, setHighlightedItem] = useState<string | null>(null);
   const highlightedItemRef = useRef<HTMLDivElement>(null);
   

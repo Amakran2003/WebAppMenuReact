@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -7,10 +7,10 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const newsItems = [
   {
     id: 1,
-    title: "Nouveau brunch dans notre resto à Paris !",
-    description: "Tous les weekends de 10h à 14h, venez découvrir notre formule brunch à 29,90€.",
+    title: "Nouveau Smash Burger au menu !",
+    description: "Notre nouveau Smash Burger avec bœuf Black Angus et sauce secrète est disponible dès maintenant.",
     date: "15 octobre 2025",
-    image: "https://images.unsplash.com/photo-1513442542250-854d436a73f2?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
@@ -18,43 +18,43 @@ const newsItems = [
 const specialties = [
   {
     id: 1,
-    name: "Nigiri Mix",
-    description: "6 pièces variées de nigiri",
-    image: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&q=80&w=800",
-    menuCategory: "Sushis",
-    menuItemId: "nigiri-mix"
+    name: "Le Classique",
+    description: "Bœuf, cheddar, bacon, laitue, tomate, oignon",
+    image: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=80",
+    menuCategory: "Burgers",
+    menuItemId: "classic-burger"
   },
   {
     id: 2,
-    name: "Pad Thaï",
-    description: "Nouilles de riz sautées au poulet et cacahuètes",
-    image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&q=80&w=800",
-    menuCategory: "Thai",
-    menuItemId: "pad-thai"
+    name: "Le Végétarien",
+    description: "Galette de légumes, fromage, avocat, roquette",
+    image: "https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=800&q=80",
+    menuCategory: "Burgers",
+    menuItemId: "vege-burger"
   },
   {
     id: 3,
-    name: "Nouilles sautées",
-    description: "Nouilles sautées au poulet et légumes",
-    image: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&q=80&w=800",
-    menuCategory: "Plats",
-    menuItemId: "nouilles-sautees"
+    name: "Frites Truffe",
+    description: "Frites maison à l'huile de truffe et parmesan",
+    image: "https://images.unsplash.com/photo-1630384060421-cb20d0e70989?auto=format&fit=crop&w=800&q=80",
+    menuCategory: "Sides",
+    menuItemId: "truffle-fries"
   },
   {
     id: 4,
-    name: "Gyoza",
-    description: "6 raviolis japonais grillés",
-    image: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&q=80&w=800",
-    menuCategory: "Plats",
-    menuItemId: "gyoza"
+    name: "Onion Rings",
+    description: "Rondelles d'oignon panées et croustillantes",
+    image: "https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=800&q=80",
+    menuCategory: "Sides",
+    menuItemId: "onion-rings"
   },
   {
     id: 5,
-    name: "Curry vert",
-    description: "Curry vert au lait de coco et poulet",
-    image: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&q=80&w=800",
-    menuCategory: "Thai",
-    menuItemId: "curry-vert"
+    name: "Milkshake Oreo",
+    description: "Milkshake crémeux aux biscuits Oreo",
+    image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80",
+    menuCategory: "Drinks",
+    menuItemId: "oreo-milkshake"
   }
 ];
 
@@ -103,7 +103,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Bienvenue au Asian Touch
+            Bienvenue chez Craft Burger Co.
           </motion.h1>
           
           <motion.p 
@@ -112,7 +112,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            Découvrez notre cuisine asiatique raffinée, préparée avec passion et authenticité.
+            Des burgers artisanaux préparés avec passion, des ingrédients locaux et une touche de créativité.
           </motion.p>
           
           <motion.div

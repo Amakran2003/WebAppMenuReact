@@ -48,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="text-xl sm:text-2xl font-serif text-[#9b2226] font-bold nav-item"
               style={{ zIndex: 1000, position: 'relative' }}
             >
-              Asian Touch
+              Craft Burger Co.
             </Link>
           </motion.div>
           
@@ -126,7 +126,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {!isMenuPage && (
         <footer className="bg-[#9b2226] text-white py-4 text-sm sm:text-base">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
-            <p>&copy; 2025 Asian Touch. Tous droits réservés.</p>
+            <p>&copy; 2025 Craft Burger Co. Tous droits réservés.</p>
             <div className="mt-2 sm:mt-0 flex space-x-4">
               <a href="#" className="hover:underline">Mentions légales</a>
               <a href="#" className="hover:underline">Politique de confidentialité</a>

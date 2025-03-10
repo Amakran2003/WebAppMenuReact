@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Craft Burger Co.</title>
+  <script type="text/javascript">
+    (function() {
+      // Simple redirect to the index with hash for mobile compatibility
+      var l = window.location;
+      var pathSegmentsToKeep = 1; // Keep the repo name
+      var path = l.pathname.split('/').slice(0, pathSegmentsToKeep + 1).join('/');
+      
+      // Redirect to the root with proper hash fragment
+      var redirect = l.origin + path + '/#' + l.pathname.slice(path.length);
+      
+      // Log for debugging
+      console.log('404 redirect: ' + redirect);
+      
+      // Try both methods for maximum compatibility
+      try {
+        window.location.replace(redirect);
+        setTimeout(function() {
+          window.location.href = redirect;
+        }, 200);
+      } catch (e) {
+        window.location.href = redirect;
+      }
+    })();
+  </script>
+</head>
+<body>
+  <p style="text-align: center; padding-top: 50px; font-family: Arial, sans-serif;">
+    Redirection en cours...
+  </p>
+  <p style="text-align: center; font-family: Arial, sans-serif;">
+    <a href="/" style="color: #9b2226; text-decoration: underline;">
+      Cliquez ici si la redirection ne fonctionne pas
+    </a>
+  </p>
+</body>
+</html>

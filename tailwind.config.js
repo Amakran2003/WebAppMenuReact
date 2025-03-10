@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['Noto Serif', 'serif'],
-        sans: ['Poppins', 'sans-serif'],
+        serif: ['Oswald', 'sans-serif'],
+        sans: ['Montserrat', 'sans-serif'],
       },
       animation: {
         'spin-slow': 'spin 3s linear infinite',

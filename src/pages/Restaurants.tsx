@@ -5,27 +5,27 @@ import { MapPin, Clock, Phone } from 'lucide-react';
 const restaurants = [
   {
     id: 1,
-    name: 'Asian Touch Paris',
+    name: 'Craft Burger Paris',
     address: '123 Avenue des Champs-Élysées, 75008 Paris',
     hours: 'Lun-Dim: 11h30-23h00',
     phone: '01 23 45 67 89',
-    image: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1555992336-03a23c7b20ee?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 2,
-    name: 'Asian Touch Lyon',
+    name: 'Craft Burger Lyon',
     address: '45 Rue de la République, 69002 Lyon',
     hours: 'Lun-Dim: 11h30-22h30',
     phone: '04 56 78 90 12',
-    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 3,
-    name: 'Asian Touch Bordeaux',
+    name: 'Craft Burger Bordeaux',
     address: '78 Rue Sainte-Catherine, 33000 Bordeaux',
     hours: 'Mar-Dim: 11h30-22h00',
     phone: '05 34 56 78 90',
-    image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80'
   }
 ];
 

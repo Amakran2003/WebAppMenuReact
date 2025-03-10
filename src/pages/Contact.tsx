@@ -116,7 +116,7 @@ export default function Contact() {
                 <Mail className="w-6 h-6 text-[#9b2226] mt-1" />
                 <div>
                   <h3 className="font-semibold">Email</h3>
-                  <p className="text-gray-600">contact@asiantouch.fr</p>
+                  <p className="text-gray-600">contact@craftburger.fr</p>
                 </div>
               </motion.div>
 
