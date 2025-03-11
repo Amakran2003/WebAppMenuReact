@@ -55,9 +55,8 @@ export const menuCategories: MenuCategory[] = [
   {
     name: 'Boissons',
     items: [
-      { id: 'craft-beer', name: 'Bière Artisanale', description: 'Sélection de bières locales (33cl)', price: '6,50€', image: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=800&q=80' },
       { id: 'oreo-milkshake', name: 'Milkshake Oréo', description: 'Milkshake crémeux aux biscuits Oréo', price: '7,50€', image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80' },
-      { id: 'chocolat-milkshake', name: 'Milkshake Chocolat', description: 'Milkshake vanille au chocolat salé maison', price: '7,50€', image: 'https://images.unsplash.com/photo-1624781740834-fbfce1c4690a?auto=format&fit=crop&w=800&q=80' },
+      { id: 'chocolat-milkshake', name: 'Milkshake Chocolat', description: 'Milkshake vanille au chocolat salé maison', price: '7,50€', image: 'https://images.unsplash.com/photo-1590373927063-cb2d69209a8b?q=80&w=2502&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&w=800&q=80' },
       { id: 'homemade-lemonade', name: 'Limonade Maison', description: 'Citron pressé, menthe fraîche, sucre de canne', price: '4,90€', image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=800&q=80' }
     ]
   },
@@ -73,7 +72,7 @@ export const menuCategories: MenuCategory[] = [
   {
     name: 'Menus',
     items: [
-      { id: 'menu-classic', name: 'Menu Classique', description: 'Burger + Frites + Boisson', price: '18,90€', image: 'https://images.unsplash.com/photo-1619881589970-3303f4446c53?auto=format&fit=crop&w=800&q=80' },
+      { id: 'menu-classic', name: 'Menu Classique', description: 'Burger + Frites + Boisson', price: '18,90€', image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=80' },
       { id: 'menu-double', name: 'Menu Double', description: 'Double burger + Frites + Boisson', price: '22,90€', image: 'https://images.unsplash.com/photo-1610614819513-58e34989848b?auto=format&fit=crop&w=800&q=80' },
       { id: 'menu-kids', name: 'Menu Enfant', description: 'Mini burger + Frites + Boisson + Surprise', price: '11,90€', image: 'https://images.unsplash.com/photo-1633896949673-1eb9d131a9b4?auto=format&fit=crop&w=800&q=80' }
     ]
