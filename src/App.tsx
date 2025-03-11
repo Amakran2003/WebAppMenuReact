@@ -7,6 +7,7 @@ import Menu from './pages/Menu';
 import Contact from './pages/Contact';
 import SplashScreen from './components/SplashScreen';
 import ScrollToTop from './components/ScrollToTop';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Root component that shows the splash screen
 function RootComponent() {
@@ -125,9 +126,11 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <AppContent />
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <ScrollToTop />
+        <AppContent />
+      </Router>
+    </ThemeProvider>
   );
 }

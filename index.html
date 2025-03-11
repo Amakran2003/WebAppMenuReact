@@ -1,11 +1,36 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" id="theme-color" />
+    <meta name="color-scheme" content="light dark">
     <title>Craft Burger Co.</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+      // Immediately apply the saved theme to prevent flash of default theme
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const defaultTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        
+        document.documentElement.classList.add(defaultTheme);
+        
+        // Update theme-color meta tag
+        const metaThemeColor = document.getElementById('theme-color');
+        if (metaThemeColor) {
+          metaThemeColor.setAttribute('content', defaultTheme === 'dark' ? '#121212' : '#ffffff');
+        }
+        
+        // Apply theme class to body as well for additional selectors
+        if (defaultTheme === 'dark') {
+          document.documentElement.style.colorScheme = 'dark';
+        } else {
+          document.documentElement.style.colorScheme = 'light';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

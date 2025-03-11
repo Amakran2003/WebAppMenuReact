@@ -3,63 +3,7 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'fram
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Confetti from '../components/Confetti';
-
-// Données pour les actualités - ajoutons des liens de destination
-const newsItems = [
-  {
-    id: 1,
-    title: "Nouveau Smash Burger au menu !",
-    description: "Notre nouveau Smash Burger avec bœuf Black Angus et sauce secrète est disponible dès maintenant.",
-    date: "15 octobre 2025",
-    // Mise à jour avec une image plus appropriée pour un Smash Burger
-    image: "https://images.unsplash.com/photo-1603046891744-1f76eb10aec1?auto=format&fit=crop&w=800&q=80",
-    link: "/menu?category=Burgers&item=smash-burger" 
-  }
-];
-
-// Données pour les spécialités
-const specialties = [
-  {
-    id: 1,
-    name: "Le Classique",
-    description: "Bœuf, cheddar, bacon, laitue, tomate, oignon",
-    image: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=80",
-    menuCategory: "Burgers",
-    menuItemId: "classic-burger"
-  },
-  {
-    id: 2,
-    name: "Le Végétarien",
-    description: "Galette de légumes, fromage, avocat, roquette",
-    image: "https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=800&q=80",
-    menuCategory: "Burgers",
-    menuItemId: "vege-burger"
-  },
-  {
-    id: 3,
-    name: "Frites Truffe",
-    description: "Frites maison à l'huile de truffe et parmesan",
-    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",
-    menuCategory: "Sides",
-    menuItemId: "truffle-fries"
-  },
-  {
-    id: 4,
-    name: "Onion Rings",
-    description: "Rondelles d'oignon panées et croustillantes",
-    image: "https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=800&q=80",
-    menuCategory: "Sides",
-    menuItemId: "onion-rings"
-  },
-  {
-    id: 5,
-    name: "Milkshake Oreo",
-    description: "Milkshake crémeux aux biscuits Oreo",
-    image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80",
-    menuCategory: "Drinks",
-    menuItemId: "oreo-milkshake"
-  }
-];
+import { newsItems, specialties } from '../data/menuData';
 
 // Composant d'élément flottant optimisé
 function FloatingElement({ 
@@ -221,21 +165,47 @@ export default function Home() {
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
       
-      // Calculate active index based on scroll position
-      const itemWidth = 280; // Width of each specialty item + gap
-      const newActiveIndex = Math.round(scrollLeft / itemWidth);
+      // Improved calculation for active index, especially for the last item
+      const lastPossibleScrollPosition = scrollWidth - clientWidth;
+      const scrollRatio = scrollLeft / lastPossibleScrollPosition;
+      const totalItems = specialties.length;
+      
+      let newActiveIndex;
+      
+      // Check if we're at or very near the end of scroll
+      if (scrollLeft + clientWidth >= scrollWidth - 20) {
+        // If we're at the end, set to the last item
+        newActiveIndex = totalItems - 1;
+      } else {
+        // Otherwise calculate based on scroll position
+        // This maps the scroll ratio to the item index range
+        newActiveIndex = Math.min(
+          Math.round(scrollRatio * (totalItems - 1)),
+          totalItems - 1
+        );
+      }
+
       if (newActiveIndex !== activeIndex) {
         setActiveIndex(newActiveIndex);
       }
     }
   };
 
-  // Add scroll event listener to track position
+  // Enhance the scroll detection
   useEffect(() => {
     const scrollContainer = specialtiesRef.current;
     if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', checkScrollability);
-      return () => scrollContainer.removeEventListener('scroll', checkScrollability);
+      const handleScroll = () => {
+        checkScrollability();
+        // Add a second check after a short delay to catch the end of momentum scrolling
+        setTimeout(checkScrollability, 200);
+      };
+      
+      scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+      // Also run checkScrollability when the component mounts
+      checkScrollability();
+      
+      return () => scrollContainer.removeEventListener('scroll', handleScroll);
     }
   }, []);
 
@@ -295,7 +265,7 @@ export default function Home() {
       >
         {/* Background circles - modified for smoother parallax */}
         <motion.div 
-          className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-gradient-to-br from-[#9b2226]/5 to-[#9b2226]/20 blur-3xl transform-gpu"
+          className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-gradient-to-br from-[#9b2226]/5 to-[#9b2226]/20 dark:from-[#e45a21]/10 dark:to-[#e45a21]/20 blur-3xl transform-gpu"
           style={{ 
             y: isScrolling ? 0 : y1,
             willChange: 'transform, opacity'
@@ -310,7 +280,7 @@ export default function Home() {
           }}
         />
         <motion.div 
-          className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-gradient-to-tr from-[#f8c136]/10 to-[#e45a21]/5 blur-3xl will-change-transform"
+          className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-gradient-to-tr from-[#f8c136]/10 to-[#e45a21]/5 dark:from-[#f8c136]/20 dark:to-[#e45a21]/10 blur-3xl will-change-transform"
           style={{ y: isScrolling ? 0 : y2 }}
           animate={!isScrolling ? {
             scale: [1, 1.2, 1],
@@ -324,7 +294,7 @@ export default function Home() {
 
         <div className="text-center max-w-5xl mx-auto z-10">
           <motion.h1 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-[#9b2226] mb-6 lg:mb-8"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-[#9b2226] dark:text-[#e45a21] mb-6 lg:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -334,7 +304,7 @@ export default function Home() {
             <div className="relative inline-block">
               <span className="relative z-10">Craft Burger Co.</span>
               <motion.div 
-                className="absolute -bottom-2 left-0 h-3 bg-[#f8c136]/30 w-full rounded-lg -z-10"
+                className="absolute -bottom-2 left-0 h-3 bg-[#f8c136]/30 dark:bg-[#f8c136]/50 w-full rounded-lg -z-10"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ delay: 0.8, duration: 0.8 }}
@@ -364,7 +334,7 @@ export default function Home() {
           </motion.div>
           
           <motion.p 
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 mb-8 lg:mb-10 px-4 max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 mb-8 lg:mb-10 px-4 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -417,7 +387,7 @@ export default function Home() {
         {/* Background décoration */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div 
-            className="absolute top-40 -right-20 w-40 h-40 rounded-full border-4 border-[#9b2226]/10"
+            className="absolute top-40 -right-20 w-40 h-40 rounded-full border-4 border-[#9b2226]/10 dark:border-[#e45a21]/20"
             animate={{
               y: [0, -20, 0],
               rotate: [0, 10, 0],
@@ -429,7 +399,7 @@ export default function Home() {
             }}
           />
           <motion.div 
-            className="absolute bottom-20 -left-10 w-20 h-20 rounded-full border-4 border-[#f8c136]/10"
+            className="absolute bottom-20 -left-10 w-20 h-20 rounded-full border-4 border-[#f8c136]/10 dark:border-[#f8c136]/20"
             animate={{
               y: [0, 20, 0],
               rotate: [0, -10, 0],
@@ -451,11 +421,11 @@ export default function Home() {
               viewport={{ once: true }}
               className="relative"
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226] relative z-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226] dark:text-[#e45a21] relative z-10">
                 Nos Spécialités
               </h2>
               <motion.div 
-                className="absolute -bottom-2 left-0 h-2 bg-[#f8c136]/40 w-full rounded-lg" 
+                className="absolute -bottom-2 left-0 h-2 bg-[#f8c136]/40 dark:bg-[#f8c136]/60 w-full rounded-lg" 
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 transition={{ delay: 0.4, duration: 0.8 }}
@@ -466,7 +436,7 @@ export default function Home() {
             <div className="hidden md:flex space-x-2">
               <motion.button
                 onClick={() => scroll('left')}
-                className={`p-2 rounded-full ${canScrollLeft ? 'bg-[#9b2226] text-white' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                className={`p-2 rounded-full ${canScrollLeft ? 'bg-[#9b2226] text-white' : 'bg-gray-200 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed'}`}
                 whileHover={canScrollLeft ? { scale: 1.1 } : {}}
                 whileTap={canScrollLeft ? { scale: 0.9 } : {}}
                 disabled={!canScrollLeft}
@@ -475,7 +445,7 @@ export default function Home() {
               </motion.button>
               <motion.button
                 onClick={() => scroll('right')}
-                className={`p-2 rounded-full ${canScrollRight ? 'bg-[#9b2226] text-white' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                className={`p-2 rounded-full ${canScrollRight ? 'bg-[#9b2226] text-white' : 'bg-gray-200 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed'}`}
                 whileHover={canScrollRight ? { scale: 1.1 } : {}}
                 whileTap={canScrollRight ? { scale: 0.9 } : {}}
                 disabled={!canScrollRight}
@@ -523,7 +493,7 @@ export default function Home() {
                         rotateX: mousePosition.y > window.innerHeight / 2 ? 5 : -5
                       }}
                       whileTap={{ scale: 0.98 }}
-                      className="bg-white rounded-xl shadow-xl overflow-hidden h-full"
+                      className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden h-full"
                       style={{
                         willChange: 'transform',
                         position: 'relative',
@@ -534,7 +504,8 @@ export default function Home() {
                       }}
                     >
                       <div className="relative overflow-hidden rounded-t-xl">
-                        <motion.div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 z-10 flex items-end p-4">
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 z-10 flex items-end p-4">
                           <p className="text-white text-xs font-medium">Découvrir</p>
                         </motion.div>
                         <motion.img 
@@ -551,12 +522,12 @@ export default function Home() {
                         />
                       </div>
                       <div className="p-4 sm:p-5">
-                        <h3 className="text-base sm:text-lg font-bold text-[#9b2226] mb-1 sm:mb-2 flex items-center">
+                        <h3 className="text-base sm:text-lg font-bold text-[#9b2226] dark:text-[#e45a21] mb-1 sm:mb-2 flex items-center">
                           {specialty.name}
                         </h3>
-                        <p className="text-gray-600 text-xs sm:text-sm">{specialty.description}</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">{specialty.description}</p>
                         <span 
-                          className="mt-3 sm:mt-4 inline-block text-xs sm:text-sm font-medium text-[#9b2226] hover:underline group-hover:text-[#660708] transition-colors duration-200"
+                          className="mt-3 sm:mt-4 inline-block text-xs sm:text-sm font-medium text-[#9b2226] dark:text-[#e45a21] hover:underline group-hover:text-[#660708] dark:group-hover:text-[#f8c136] transition-colors duration-200"
                         >
                           Voir sur le menu
                           <motion.span 
@@ -576,12 +547,24 @@ export default function Home() {
             
             {/* Mobile indicator dots */}
             <div className="flex justify-center space-x-2 mt-4 md:hidden">
-              {specialties.map((_, index) => (
+              {specialties.map((specialty, index) => (
                 <motion.div
                   key={index}
-                  className={`w-2 h-2 rounded-full ${index === activeIndex ? 'bg-[#9b2226]' : 'bg-gray-300'}`}
+                  className={`w-2 h-2 rounded-full ${index === activeIndex ? 'bg-[#9b2226] dark:bg-[#e45a21]' : 'bg-gray-300 dark:bg-gray-600'}`}
                   animate={{ scale: index === activeIndex ? 1.2 : 1 }}
                   transition={{ duration: 0.2 }}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    // Allow clicking on dots to scroll to that item
+                    if (specialtiesRef.current) {
+                      const itemWidth = 280; // Width of each specialty item + gap
+                      specialtiesRef.current.scrollTo({
+                        left: index * itemWidth,
+                        behavior: 'smooth'
+                      });
+                      setActiveIndex(index);
+                    }
+                  }}
                 />
               ))}
             </div>
@@ -591,7 +574,7 @@ export default function Home() {
 
       {/* News Section */}
       <motion.section 
-        className="py-12 bg-[#f9f5f0] relative overflow-hidden"
+        className="py-12 bg-[#f9f5f0] dark:bg-gray-900 relative overflow-hidden"
         style={{ zIndex: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -599,7 +582,7 @@ export default function Home() {
       >
         {/* Background details */}
         <motion.div 
-          className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#9b2226]/5 blur-3xl"
+          className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[#9b2226]/5 dark:bg-[#e45a21]/10 blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.5, 0.8, 0.5]
@@ -607,7 +590,7 @@ export default function Home() {
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div 
-          className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-[#f8c136]/5 blur-3xl"
+          className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-[#f8c136]/5 dark:bg-[#f8c136]/10 blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
             opacity: [0.5, 0.7, 0.5]
@@ -622,12 +605,12 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226] text-center mb-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226] dark:text-[#e45a21] text-center mb-2">
               Nos Actualités
             </h2>
             <div className="flex justify-center mb-8">
               <motion.div 
-                className="h-1 w-20 bg-[#9b2226]/30 rounded-full"
+                className="h-1 w-20 bg-[#9b2226]/30 dark:bg-[#e45a21]/50 rounded-full"
                 initial={{ width: 0 }}
                 whileInView={{ width: 80 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
@@ -654,7 +637,7 @@ export default function Home() {
                     zIndex: 100,
                     boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
                   }}
-                  className="bg-white rounded-xl shadow-xl overflow-hidden group"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden group"
                   style={{ willChange: 'transform' }}
                 >
                   <div className="relative">
@@ -671,7 +654,7 @@ export default function Home() {
                       viewport={{ once: true }}
                     />
                     <motion.div 
-                      className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium"
+                      className="absolute bottom-4 right-4 bg-white/90 dark:bg-gray-700 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium"
                       initial={{ x: 20, opacity: 0 }}
                       whileInView={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.5 }}
@@ -683,14 +666,14 @@ export default function Home() {
                   
                   <div className="p-5">
                     <div className="mb-3">
-                      <h3 className="text-lg sm:text-xl font-bold text-[#9b2226] mb-2">{news.title}</h3>
-                      <div className="w-10 h-1 bg-[#f8c136]/50 rounded-full" />
+                      <h3 className="text-lg sm:text-xl font-bold text-[#9b2226] dark:text-[#e45a21] mb-2">{news.title}</h3>
+                      <div className="w-10 h-1 bg-[#f8c136]/50 dark:bg-[#f8c136]/70 rounded-full" />
                     </div>
-                    <p className="text-gray-600 text-sm sm:text-base">{news.description}</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">{news.description}</p>
                     
                     <div className="mt-4">
                       <span 
-                        className="inline-flex items-center text-sm sm:text-base font-medium text-[#9b2226] group-hover:underline"
+                        className="inline-flex items-center text-sm sm:text-base font-medium text-[#9b2226] dark:text-[#e45a21] group-hover:underline"
                       >
                         En savoir plus 
                         <motion.span 

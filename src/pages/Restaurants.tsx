@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, Phone } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 const restaurants = [
   {
@@ -30,10 +31,13 @@ const restaurants = [
 ];
 
 export default function Restaurants() {
+  const { themeColors } = useTheme();
+  
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <motion.h1
-        className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#9b2226] text-center mb-8 sm:mb-12"
+        className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-center mb-8 sm:mb-12"
+        style={{ color: themeColors.heading }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -45,7 +49,8 @@ export default function Restaurants() {
         {restaurants.map((restaurant, index) => (
           <motion.div
             key={restaurant.id}
-            className="bg-white rounded-xl shadow-lg overflow-hidden h-full"
+            className="rounded-xl shadow-lg overflow-hidden h-full"
+            style={{ backgroundColor: themeColors.cardBackground }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -57,23 +62,28 @@ export default function Restaurants() {
               className="w-full h-48 sm:h-56 object-cover"
             />
             <div className="p-4 sm:p-6">
-              <h3 className="text-lg sm:text-xl font-serif font-bold text-[#9b2226] mb-3 sm:mb-4">
+              <h3 className="text-lg sm:text-xl font-serif font-bold mb-3 sm:mb-4"
+                  style={{ color: themeColors.heading }}>
                 {restaurant.name}
               </h3>
               
-              <div className="space-y-2 sm:space-y-3 text-gray-600 text-sm sm:text-base">
+              <div className="space-y-2 sm:space-y-3 text-sm sm:text-base"
+                   style={{ color: themeColors.text }}>
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#9b2226] flex-shrink-0" />
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" 
+                           style={{ color: themeColors.heading }} />
                   <span className="line-clamp-2">{restaurant.address}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-[#9b2226] flex-shrink-0" />
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" 
+                          style={{ color: themeColors.heading }} />
                   <span>{restaurant.hours}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#9b2226] flex-shrink-0" />
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" 
+                          style={{ color: themeColors.heading }} />
                   <span>{restaurant.phone}</span>
                 </div>
               </div>

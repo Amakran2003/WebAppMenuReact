@@ -47,8 +47,13 @@ export default function SplashScreen({ onComplete, redirectTo }: SplashScreenPro
     return () => clearTimeout(timer);
   }, [onComplete, redirectTo, navigate]);
 
+  // Get the user's theme preference to match the splash screen
+  const isDarkMode = typeof window !== 'undefined' && 
+    (document.documentElement.classList.contains('dark') ||
+    (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
+
   return (
-    <div className="splash-screen">
+    <div className={`splash-screen ${isDarkMode ? 'dark-mode' : ''}`}>
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}

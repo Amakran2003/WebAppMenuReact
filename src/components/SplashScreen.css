@@ -6,6 +6,10 @@
   background-color: #111; /* Adjust to match your app's theme */
 }
 
+.splash-screen.dark-mode {
+  background-color: #000;
+}
+
 .logo-container {
   display: flex;
   flex-direction: column;
