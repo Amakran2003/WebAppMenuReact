@@ -60,21 +60,18 @@
           metaThemeColor.setAttribute('content', defaultTheme === 'dark' ? '#121212' : '#ffffff');
         }
         
-        // Apply theme class to body as well for additional selectors
-        if (defaultTheme === 'dark') {
-          document.documentElement.style.colorScheme = 'dark';
-        } else {
-          document.documentElement.style.colorScheme = 'light';
-        }
+        // Apply theme class to html and set color-scheme
+        document.documentElement.style.colorScheme = defaultTheme;
+        
+        console.log("Thème initial appliqué:", defaultTheme);
       })();
     </script>
-    <script type="module" crossorigin src="./assets/index-Cptp2HtY.js"></script>
+    <!-- Chargement anticipé du détecteur de thème -->
+    <script src="js/theme-detector.js"></script>
+    <script type="module" crossorigin src="./assets/index-B_ulhFuz.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-B-2TLMw1.css">
   </head>
   <body>
     <div id="root"></div>
-    
-    <!-- Vos autres scripts -->
-    <script src="js/theme-detector.js"></script>
   </body>
 </html>
