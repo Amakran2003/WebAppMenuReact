@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Confetti from '../components/Confetti';
 import { newsItems, specialties } from '../data/menuData';
+import { useTheme } from '../context/ThemeContext';
 
 // Composant d'élément flottant optimisé
 function FloatingElement({ 
@@ -83,6 +84,7 @@ function FloatingElement({
 
 // Composant pour le suiveur de souris
 function MouseFollower() {
+  const { themeColors } = useTheme();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
@@ -105,8 +107,9 @@ function MouseFollower() {
 
   return (
     <motion.div
-      className="fixed w-6 h-6 rounded-full bg-[#9b2226] opacity-20 pointer-events-none z-50 hidden md:block"
+      className="fixed w-6 h-6 rounded-full opacity-20 pointer-events-none z-50 hidden md:block"
       style={{
+        backgroundColor: themeColors.heading,
         top: -15,
         left: -15,
         x: springX,
@@ -117,6 +120,7 @@ function MouseFollower() {
 }
 
 export default function Home() {
+  const { themeColors, theme } = useTheme();
   const specialtiesRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -265,8 +269,9 @@ export default function Home() {
       >
         {/* Background circles - modified for smoother parallax */}
         <motion.div 
-          className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-gradient-to-br from-[#9b2226]/5 to-[#9b2226]/20 dark:from-[#e45a21]/10 dark:to-[#e45a21]/20 blur-3xl transform-gpu"
+          className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl transform-gpu"
           style={{ 
+            background: `radial-gradient(circle, ${theme === 'light' ? 'rgba(155, 34, 38, 0.1)' : 'rgba(228, 90, 33, 0.15)'}, ${theme === 'light' ? 'rgba(155, 34, 38, 0.2)' : 'rgba(228, 90, 33, 0.25)'})`,
             y: isScrolling ? 0 : y1,
             willChange: 'transform, opacity'
           }}
@@ -280,8 +285,11 @@ export default function Home() {
           }}
         />
         <motion.div 
-          className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-gradient-to-tr from-[#f8c136]/10 to-[#e45a21]/5 dark:from-[#f8c136]/20 dark:to-[#e45a21]/10 blur-3xl will-change-transform"
-          style={{ y: isScrolling ? 0 : y2 }}
+          className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full blur-3xl will-change-transform"
+          style={{ 
+            background: `radial-gradient(circle, ${theme === 'light' ? 'rgba(248, 193, 54, 0.1)' : 'rgba(248, 193, 54, 0.2)'}, ${theme === 'light' ? 'rgba(155, 34, 38, 0.05)' : 'rgba(155, 34, 38, 0.15)'})`,
+            y: isScrolling ? 0 : y2 
+          }}
           animate={!isScrolling ? {
             scale: [1, 1.2, 1],
           } : {}}
@@ -294,17 +302,23 @@ export default function Home() {
 
         <div className="text-center max-w-5xl mx-auto z-10">
           <motion.h1 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-[#9b2226] dark:text-[#e45a21] mb-6 lg:mb-8"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold mb-6 lg:mb-8"
+            style={{ 
+              color: themeColors.heading,
+              textShadow: theme === 'light' 
+                ? "0px 0px 5px rgba(255, 255, 255, 0.8)" 
+                : "0px 0px 8px rgba(0, 0, 0, 0.7), 0px 0px 3px rgba(155, 34, 38, 0.5)"
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            style={{ textShadow: "0px 0px 5px rgba(255, 255, 255, 0.8)" }}
           >
             Bienvenue chez{' '}
             <div className="relative inline-block">
               <span className="relative z-10">Craft Burger Co.</span>
               <motion.div 
-                className="absolute -bottom-2 left-0 h-3 bg-[#f8c136]/30 dark:bg-[#f8c136]/50 w-full rounded-lg -z-10"
+                className="absolute -bottom-2 left-0 h-3 w-full rounded-lg -z-10"
+                style={{ backgroundColor: `${themeColors.secondary}50` }}
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ delay: 0.8, duration: 0.8 }}
@@ -322,6 +336,11 @@ export default function Home() {
               src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=80"
               alt="Burger délicieux"
               className="w-full h-48 sm:h-64 md:h-80 object-cover rounded-xl shadow-xl"
+              style={{ 
+                boxShadow: theme === 'light' 
+                  ? "0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" 
+                  : "0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.4)"
+              }}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
             />
@@ -334,7 +353,11 @@ export default function Home() {
           </motion.div>
           
           <motion.p 
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 mb-8 lg:mb-10 px-4 max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 lg:mb-10 px-4 max-w-3xl mx-auto"
+            style={{ 
+              color: theme === 'light' ? '#4b5563' : '#e5e7eb',
+              textShadow: theme === 'dark' ? "0px 1px 2px rgba(0, 0, 0, 0.8)" : "none" 
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -351,8 +374,13 @@ export default function Home() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 to="/menu"
-                className="inline-block bg-[#9b2226] text-white px-6 sm:px-8 py-3 rounded-lg font-medium
-                         hover:bg-[#660708] transition-colors duration-200 text-sm sm:text-base md:text-lg relative overflow-hidden group"
+                className="inline-block text-white px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors duration-200 text-sm sm:text-base md:text-lg relative overflow-hidden group hover:bg-[#660708]"
+                style={{ 
+                  backgroundColor: themeColors.primary,
+                  boxShadow: theme === 'light' 
+                    ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" 
+                    : "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
+                }}
               >
                 <motion.span 
                   className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"
@@ -364,11 +392,19 @@ export default function Home() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 to="/restaurants"
-                className="inline-block bg-white text-[#9b2226] border-2 border-[#9b2226] px-6 sm:px-8 py-3 rounded-lg font-medium
-                         hover:bg-[#f9f5f0] transition-colors duration-200 text-sm sm:text-base md:text-lg relative overflow-hidden group"
+                className="inline-block border-2 px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors duration-200 text-sm sm:text-base md:text-lg relative overflow-hidden group"
+                style={{ 
+                  backgroundColor: theme === 'light' ? '#ffffff' : 'transparent',
+                  color: themeColors.primary,
+                  borderColor: themeColors.primary,
+                  boxShadow: theme === 'light' 
+                    ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" 
+                    : "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
+                }}
               >
                 <motion.span 
-                  className="absolute inset-0 bg-[#9b2226]/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"
+                  className="absolute inset-0 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"
+                  style={{ backgroundColor: `${themeColors.primary}10` }}
                 />
                 Nos restaurants
               </Link>
@@ -387,7 +423,8 @@ export default function Home() {
         {/* Background décoration */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div 
-            className="absolute top-40 -right-20 w-40 h-40 rounded-full border-4 border-[#9b2226]/10 dark:border-[#e45a21]/20"
+            className="absolute top-40 -right-20 w-40 h-40 rounded-full border-4"
+            style={{ borderColor: `${themeColors.heading}10` }}
             animate={{
               y: [0, -20, 0],
               rotate: [0, 10, 0],
@@ -399,7 +436,8 @@ export default function Home() {
             }}
           />
           <motion.div 
-            className="absolute bottom-20 -left-10 w-20 h-20 rounded-full border-4 border-[#f8c136]/10 dark:border-[#f8c136]/20"
+            className="absolute bottom-20 -left-10 w-20 h-20 rounded-full border-4"
+            style={{ borderColor: `${themeColors.secondary}10` }}
             animate={{
               y: [0, 20, 0],
               rotate: [0, -10, 0],
@@ -421,11 +459,13 @@ export default function Home() {
               viewport={{ once: true }}
               className="relative"
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226] dark:text-[#e45a21] relative z-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold relative z-10"
+                  style={{ color: themeColors.heading }}>
                 Nos Spécialités
               </h2>
               <motion.div 
-                className="absolute -bottom-2 left-0 h-2 bg-[#f8c136]/40 dark:bg-[#f8c136]/60 w-full rounded-lg" 
+                className="absolute -bottom-2 left-0 h-2 w-full rounded-lg" 
+                style={{ backgroundColor: `${themeColors.secondary}50` }}
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 transition={{ delay: 0.4, duration: 0.8 }}
@@ -436,7 +476,11 @@ export default function Home() {
             <div className="hidden md:flex space-x-2">
               <motion.button
                 onClick={() => scroll('left')}
-                className={`p-2 rounded-full ${canScrollLeft ? 'bg-[#9b2226] text-white' : 'bg-gray-200 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed'}`}
+                className={`p-2 rounded-full ${!canScrollLeft && 'bg-gray-200 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed'}`}
+                style={{ 
+                  backgroundColor: canScrollLeft ? themeColors.primary : undefined,
+                  color: canScrollLeft ? '#ffffff' : undefined 
+                }}
                 whileHover={canScrollLeft ? { scale: 1.1 } : {}}
                 whileTap={canScrollLeft ? { scale: 0.9 } : {}}
                 disabled={!canScrollLeft}
@@ -445,7 +489,11 @@ export default function Home() {
               </motion.button>
               <motion.button
                 onClick={() => scroll('right')}
-                className={`p-2 rounded-full ${canScrollRight ? 'bg-[#9b2226] text-white' : 'bg-gray-200 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed'}`}
+                className={`p-2 rounded-full ${!canScrollRight && 'bg-gray-200 text-gray-400 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed'}`}
+                style={{ 
+                  backgroundColor: canScrollRight ? themeColors.primary : undefined,
+                  color: canScrollRight ? '#ffffff' : undefined 
+                }}
                 whileHover={canScrollRight ? { scale: 1.1 } : {}}
                 whileTap={canScrollRight ? { scale: 0.9 } : {}}
                 disabled={!canScrollRight}
@@ -488,19 +536,25 @@ export default function Home() {
                       whileHover={{ 
                         y: -5, 
                         zIndex: 999, 
-                        boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                        boxShadow: theme === 'light' 
+                          ? "0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1)" 
+                          : "0 15px 30px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.25)",
                         rotateY: mousePosition.x > window.innerWidth / 2 ? -5 : 5,
                         rotateX: mousePosition.y > window.innerHeight / 2 ? 5 : -5
                       }}
                       whileTap={{ scale: 0.98 }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden h-full"
+                      className="rounded-xl overflow-hidden h-full"
                       style={{
+                        backgroundColor: theme === 'light' ? '#ffffff' : '#2d2d2d',
                         willChange: 'transform',
                         position: 'relative',
                         transformOrigin: 'center center',
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                         borderRadius: '0.75rem',
+                        boxShadow: theme === 'light' 
+                          ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" 
+                          : "0 4px 8px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3)"
                       }}
                     >
                       <div className="relative overflow-hidden rounded-t-xl">
@@ -522,12 +576,22 @@ export default function Home() {
                         />
                       </div>
                       <div className="p-4 sm:p-5">
-                        <h3 className="text-base sm:text-lg font-bold text-[#9b2226] dark:text-[#e45a21] mb-1 sm:mb-2 flex items-center">
+                        <h3 className="text-base sm:text-lg font-bold mb-1 sm:mb-2 flex items-center"
+                            style={{ 
+                              color: themeColors.heading,
+                              textShadow: theme === 'dark' ? "0px 1px 1px rgba(0, 0, 0, 0.5)" : "none" 
+                            }}>
                           {specialty.name}
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">{specialty.description}</p>
+                        <p className="text-xs sm:text-sm"
+                           style={{ 
+                             color: theme === 'light' ? '#4b5563' : '#e5e7eb',
+                           }}>
+                          {specialty.description}
+                        </p>
                         <span 
-                          className="mt-3 sm:mt-4 inline-block text-xs sm:text-sm font-medium text-[#9b2226] dark:text-[#e45a21] hover:underline group-hover:text-[#660708] dark:group-hover:text-[#f8c136] transition-colors duration-200"
+                          className="mt-3 sm:mt-4 inline-block text-xs sm:text-sm font-medium hover:underline transition-colors duration-200"
+                          style={{ color: themeColors.heading }}
                         >
                           Voir sur le menu
                           <motion.span 
@@ -545,19 +609,22 @@ export default function Home() {
               ))}
             </div>
             
-            {/* Mobile indicator dots */}
+            {/* Mobile indicator dots - fixed duplicate style attribute */}
             <div className="flex justify-center space-x-2 mt-4 md:hidden">
-              {specialties.map((specialty, index) => (
+              {specialties.map((_, index) => (
                 <motion.div
                   key={index}
-                  className={`w-2 h-2 rounded-full ${index === activeIndex ? 'bg-[#9b2226] dark:bg-[#e45a21]' : 'bg-gray-300 dark:bg-gray-600'}`}
+                  className={`w-2 h-2 rounded-full ${index !== activeIndex && 'bg-gray-300 dark:bg-gray-600'}`}
+                  style={{ 
+                    backgroundColor: index === activeIndex ? themeColors.heading : undefined,
+                    cursor: 'pointer',
+                    boxShadow: index === activeIndex ? '0 0 3px rgba(0, 0, 0, 0.3)' : 'none'
+                  }}
                   animate={{ scale: index === activeIndex ? 1.2 : 1 }}
                   transition={{ duration: 0.2 }}
-                  style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    // Allow clicking on dots to scroll to that item
                     if (specialtiesRef.current) {
-                      const itemWidth = 280; // Width of each specialty item + gap
+                      const itemWidth = 280;
                       specialtiesRef.current.scrollTo({
                         left: index * itemWidth,
                         behavior: 'smooth'
@@ -574,8 +641,11 @@ export default function Home() {
 
       {/* News Section */}
       <motion.section 
-        className="py-12 bg-[#f9f5f0] dark:bg-gray-900 relative overflow-hidden"
-        style={{ zIndex: 0 }}
+        className="py-12 relative overflow-hidden"
+        style={{ 
+          backgroundColor: theme === 'light' ? '#f9f5f0' : '#1a1a1a',
+          zIndex: 0 
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -605,12 +675,17 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#9b2226] dark:text-[#e45a21] text-center mb-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-center mb-2"
+                style={{ 
+                  color: themeColors.heading,
+                  textShadow: theme === 'dark' ? "0px 1px 2px rgba(0, 0, 0, 0.5)" : "none" 
+                }}>
               Nos Actualités
             </h2>
             <div className="flex justify-center mb-8">
               <motion.div 
-                className="h-1 w-20 bg-[#9b2226]/30 dark:bg-[#e45a21]/50 rounded-full"
+                className="h-1 w-20 rounded-full"
+                style={{ backgroundColor: `${themeColors.heading}40` }}
                 initial={{ width: 0 }}
                 whileInView={{ width: 80 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
@@ -635,10 +710,19 @@ export default function Home() {
                   whileHover={{ 
                     y: -5,
                     zIndex: 100,
-                    boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
+                    boxShadow: theme === 'light' 
+                      ? "0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
+                      : "0 15px 30px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.25)" 
                   }}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden group"
-                  style={{ willChange: 'transform' }}
+                  className="rounded-xl overflow-hidden group"
+                  style={{ 
+                    backgroundColor: theme === 'light' ? '#ffffff' : '#2d2d2d',
+                    willChange: 'transform',
+                    border: theme === 'dark' ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
+                    boxShadow: theme === 'light' 
+                      ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" 
+                      : "0 4px 8px rgba(0, 0, 0, 0.4)" 
+                  }}
                 >
                   <div className="relative">
                     <img 
@@ -647,18 +731,21 @@ export default function Home() {
                       className="w-full h-48 sm:h-56 md:h-64 object-cover"
                     />
                     <motion.div 
-                      className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
+                      className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
                       viewport={{ once: true }}
                     />
                     <motion.div 
-                      className="absolute bottom-4 right-4 bg-white/90 dark:bg-gray-700 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium"
+                      className="absolute bottom-4 right-4 bg-white/90 dark:bg-gray-800 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium"
                       initial={{ x: 20, opacity: 0 }}
                       whileInView={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.5 }}
                       viewport={{ once: true }}
+                      style={{
+                        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.15)"
+                      }}
                     >
                       {news.date}
                     </motion.div>
@@ -666,14 +753,28 @@ export default function Home() {
                   
                   <div className="p-5">
                     <div className="mb-3">
-                      <h3 className="text-lg sm:text-xl font-bold text-[#9b2226] dark:text-[#e45a21] mb-2">{news.title}</h3>
-                      <div className="w-10 h-1 bg-[#f8c136]/50 dark:bg-[#f8c136]/70 rounded-full" />
+                      <h3 className="text-lg sm:text-xl font-bold mb-2"
+                          style={{ 
+                            color: themeColors.heading,
+                            textShadow: theme === 'dark' ? "0px 1px 1px rgba(0, 0, 0, 0.5)" : "none" 
+                          }}>
+                        {news.title}
+                      </h3>
+                      <div className="w-10 h-1 rounded-full"
+                           style={{ backgroundColor: `${themeColors.secondary}60` }} />
                     </div>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">{news.description}</p>
+                    <p className="text-sm sm:text-base"
+                       style={{ color: theme === 'light' ? '#4b5563' : '#e5e7eb' }}>
+                      {news.description}
+                    </p>
                     
                     <div className="mt-4">
                       <span 
-                        className="inline-flex items-center text-sm sm:text-base font-medium text-[#9b2226] dark:text-[#e45a21] group-hover:underline"
+                        className="inline-flex items-center text-sm sm:text-base font-medium group-hover:underline"
+                        style={{ 
+                          color: themeColors.heading,
+                          textShadow: theme === 'dark' ? "0px 1px 1px rgba(0, 0, 0, 0.5)" : "none" 
+                        }}
                       >
                         En savoir plus 
                         <motion.span 
