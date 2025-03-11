@@ -1,43 +1,40 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" id="theme-color" />
+    <meta name="color-scheme" content="light dark">
     <title>Craft Burger Co.</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Garantir le chargement même en cas de problème -->
     <script>
-      // Vérifier si la page est blanche après un délai
-      setTimeout(function() {
-        if (document.body.textContent.trim() === '') {
-          console.log("Blank page detected, attempting reload");
-          window.location.reload();
+      // Immediately apply the saved theme to prevent flash of default theme
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const defaultTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        
+        document.documentElement.classList.add(defaultTheme);
+        
+        // Update theme-color meta tag
+        const metaThemeColor = document.getElementById('theme-color');
+        if (metaThemeColor) {
+          metaThemeColor.setAttribute('content', defaultTheme === 'dark' ? '#121212' : '#ffffff');
         }
-      }, 5000);
+        
+        // Apply theme class to body as well for additional selectors
+        if (defaultTheme === 'dark') {
+          document.documentElement.style.colorScheme = 'dark';
+        } else {
+          document.documentElement.style.colorScheme = 'light';
+        }
+      })();
     </script>
-    <script type="module" crossorigin src="/WebAppMenuReact/assets/index-kNC7kc0-.js"></script>
-    <link rel="stylesheet" crossorigin href="/WebAppMenuReact/assets/index-BqGObYw1.css">
+    <script type="module" crossorigin src="./assets/index-whYmyZnE.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DyV9Ja4p.css">
   </head>
   <body>
     <div id="root"></div>
-    <!-- Ajoutez un élément de secours pour les pages blanches -->
-    <div id="loading-fallback" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 9999; text-align: center; padding-top: 50vh; font-family: 'Montserrat', sans-serif;">
-      Chargement de Craft Burger Co...
-      <br>
-      <button onclick="window.location.reload()" style="margin-top: 20px; background: #9b2226; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-        Recharger la page
-      </button>
-    </div>
-    <script>
-      // Afficher le fallback si le contenu n'est pas chargé rapidement
-      setTimeout(function() {
-        const root = document.getElementById('root');
-        const fallback = document.getElementById('loading-fallback');
-        if (root && !root.children.length && fallback) {
-          fallback.style.display = 'block';
-        }
-      }, 3000);
-    </script>
   </body>
 </html>
