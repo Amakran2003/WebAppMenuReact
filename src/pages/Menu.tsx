@@ -13,8 +13,12 @@ export default function Menu() {
   const [activeCategory, setActiveCategory] = useState('Burgers');
   const [highlightedItem, setHighlightedItem] = useState<string | null>(null);
   const highlightedItemRef = useRef<HTMLDivElement>(null);
+  const initialScrollAttemptedRef = useRef(false);
   
   useEffect(() => {
+    // Reset scroll attempt flag when URL params change
+    initialScrollAttemptedRef.current = false;
+    
     // Si un paramètre de catégorie est fourni, sélectionnez cette catégorie
     if (categoryParam) {
       const categoryExists = menuCategories.some(cat => cat.name === categoryParam);
@@ -26,21 +30,43 @@ export default function Menu() {
     // Définir l'élément à mettre en évidence
     if (itemParam) {
       setHighlightedItem(itemParam);
+      console.log('Item to highlight:', itemParam);
     }
   }, [categoryParam, itemParam]);
   
   useEffect(() => {
     // Faire défiler jusqu'à l'élément mis en évidence avec un léger délai
     // pour permettre au rendu de se terminer
-    if (highlightedItem && highlightedItemRef.current) {
-      const timer = setTimeout(() => {
-        highlightedItemRef.current?.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'center'
-        });
-      }, 600);
+    if (highlightedItem) {
+      const attemptScroll = (delay: number) => {
+        setTimeout(() => {
+          // Try direct method first
+          const element = document.getElementById(highlightedItem);
+          if (element) {
+            console.log(`Found element with ID ${highlightedItem}, scrolling to it`);
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'center'
+            });
+          } else if (highlightedItemRef.current) {
+            console.log('Using ref to scroll to highlighted item');
+            highlightedItemRef.current.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'center'
+            });
+          } else {
+            console.log(`Could not find element with ID ${highlightedItem}`);
+            // If we haven't tried the fallback delay yet, try again with a longer delay
+            if (delay < 1500 && !initialScrollAttemptedRef.current) {
+              attemptScroll(1500);
+              initialScrollAttemptedRef.current = true;
+            }
+          }
+        }, delay);
+      };
       
-      return () => clearTimeout(timer);
+      // First attempt with short delay
+      attemptScroll(600);
     }
   }, [highlightedItem, activeCategory]);
 
@@ -103,10 +129,13 @@ export default function Menu() {
                       key={`${item.id}-${itemIndex}`}
                       id={item.id}
                       ref={item.id === highlightedItem ? highlightedItemRef : null}
-                      className="rounded-lg shadow-md overflow-hidden flex flex-col relative"
+                      className={`rounded-lg shadow-md overflow-hidden flex flex-col relative ${
+                        item.id === highlightedItem ? 'ring-4 ring-opacity-70' : ''
+                      }`}
                       style={{
                         backgroundColor: themeColors.cardBackground,
-                        boxShadow: item.id === highlightedItem ? `0 0 0 4px ${themeColors.primary}` : undefined
+                        boxShadow: item.id === highlightedItem ? `0 0 0 4px ${themeColors.primary}` : undefined,
+                        ringColor: item.id === highlightedItem ? themeColors.primary : undefined
                       }}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ 

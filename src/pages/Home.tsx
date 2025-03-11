@@ -2,86 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Confetti from '../components/Confetti';
 import { newsItems, specialties } from '../data/menuData';
 import { useTheme } from '../context/ThemeContext';
 import ThemedButton from '../components/ThemedButton';
-
-// Composant d'élément flottant optimisé
-function FloatingElement({ 
-  emoji, 
-  x, 
-  y, 
-  delay, 
-  duration 
-}: { 
-  emoji: string; 
-  x: number; 
-  y: number; 
-  delay: number; 
-  duration: number; 
-}) {
-  const [isScrolling, setIsScrolling] = useState(false);
-  const lastScrollTime = useRef(0);
-
-  useEffect(() => {
-    let rafId: number;
-    
-    const checkScroll = () => {
-      const now = Date.now();
-      // Si défilement récent détecté
-      setIsScrolling(now - lastScrollTime.current < 100);
-      rafId = requestAnimationFrame(checkScroll);
-    };
-    
-    rafId = requestAnimationFrame(checkScroll);
-    
-    const handleScroll = () => {
-      lastScrollTime.current = Date.now();
-    };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  return (
-    <motion.div
-      className="absolute text-3xl sm:text-4xl pointer-events-none z-10 transform-gpu"
-      initial={{ opacity: 0, scale: 0 }}
-      style={{ 
-        opacity: isScrolling ? 0.4 : undefined,
-        willChange: 'transform, opacity'
-      }}
-      animate={!isScrolling ? { 
-        opacity: [0, 0.6, 0.6, 0],
-        scale: [0, 1, 1, 0],
-        x: [x, x + 50, x + 70, x + 100],
-        y: [y, y - 50, y - 70, y - 100],
-        rotate: [0, 5, -5, 0]
-      } : {
-        // Animation simplifiée pendant le défilement
-        x: x + 50,
-        y: y - 50,
-        opacity: 0.4,
-        scale: 0.8
-      }}
-      transition={{ 
-        duration: isScrolling ? 0 : duration, 
-        delay: delay,
-        repeat: Infinity,
-        repeatDelay: 4,
-        ease: "linear",
-        type: isScrolling ? "tween" : "keyframes"
-      }}
-    >
-      {emoji}
-    </motion.div>
-  );
-}
 
 // Composant pour le suiveur de souris
 function MouseFollower() {
@@ -127,15 +50,10 @@ export default function Home() {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  // Ajout d'un état pour forcer le rendu des confettis
-  const [confettiKey, setConfettiKey] = useState(Date.now());
   const [isScrolling, setIsScrolling] = useState(false);
   const lastScrollTime = useRef(Date.now());
 
   useEffect(() => {
-    setConfettiKey(Date.now());
-    
     // Utiliser requestAnimationFrame pour une détection plus fluide du défilement
     let rafId: number;
     const checkScroll = () => {
@@ -242,9 +160,6 @@ export default function Home() {
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
-
-  // Updated button styles with fallback values to prevent styling issues during initialization
-  // Removing unused button style variables
   
   // Define a consistent underline style for titles - updated to use yellow in both themes
   const underlineStyle = {
@@ -253,18 +168,23 @@ export default function Home() {
 
   return (
     <div className="min-h-[calc(100vh-8rem)] overflow-x-hidden">
-      {/* Confetti animation - now shown all the time with optimized animations */}
-      <Confetti key={confettiKey} />
+      {/* Replace confetti with decorative background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div 
+          className="absolute top-0 right-0 w-full h-full opacity-20"
+          style={{
+            background: `
+              radial-gradient(circle at 20% 20%, ${theme === 'light' ? 'rgba(155, 34, 38, 0.15)' : 'rgba(228, 90, 33, 0.15)'}, transparent 30%),
+              radial-gradient(circle at 80% 60%, ${theme === 'light' ? 'rgba(248, 193, 54, 0.15)' : 'rgba(248, 193, 54, 0.2)'}, transparent 30%),
+              radial-gradient(circle at 40% 80%, ${theme === 'light' ? 'rgba(155, 34, 38, 0.1)' : 'rgba(228, 90, 33, 0.1)'}, transparent 20%)
+            `,
+            transition: 'background 0.5s ease'
+          }}
+        />
+      </div>
       
       {/* Suiveur de souris */}
       <MouseFollower />
-      
-      {/* Éléments flottants - réduits en nombre */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <FloatingElement emoji="🍔" x={100} y={200} delay={0} duration={22} />
-        <FloatingElement emoji="🍟" x={300} y={400} delay={5} duration={20} />
-        <FloatingElement emoji="🥤" x={700} y={300} delay={2} duration={25} />
-      </div>
       
       {/* Hero Section */}
       <motion.section 
@@ -602,12 +522,6 @@ export default function Home() {
                   transition={{ duration: 0.2 }}
                   onClick={() => {
                     if (specialtiesRef.current) {
-                      const itemWidth = 280;
-                      specialtiesRef.current.scrollTo({
-                        left: index * itemWidth,
-                        behavior: 'smooth'
-                      });
-                      setActiveIndex(index);
                     }
                   }}
                 />

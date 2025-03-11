@@ -8,6 +8,7 @@ export default function ScrollToTop() {
     // Ne pas faire défiler automatiquement vers le haut si nous naviguons vers le menu avec des paramètres de requête
     // car nous voulons défiler vers l'élément spécifique
     if (pathname === '/menu' && search.includes('item=')) {
+      console.log('Skipping auto-scroll to top for menu item navigation');
       return;
     }
     
