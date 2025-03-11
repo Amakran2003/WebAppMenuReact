@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Confetti from '../components/Confetti';
 import { newsItems, specialties } from '../data/menuData';
 import { useTheme } from '../context/ThemeContext';
+import ThemedButton from '../components/ThemedButton';
 
 // Composant d'élément flottant optimisé
 function FloatingElement({ 
@@ -242,6 +243,14 @@ export default function Home() {
     };
   }, []);
 
+  // Updated button styles with fallback values to prevent styling issues during initialization
+  // Removing unused button style variables
+  
+  // Define a consistent underline style for titles - updated to use yellow in both themes
+  const underlineStyle = {
+    backgroundColor: '#f8c136' // Yellow color for both light and dark modes
+  };
+
   return (
     <div className="min-h-[calc(100vh-8rem)] overflow-x-hidden">
       {/* Confetti animation - now shown all the time with optimized animations */}
@@ -318,7 +327,7 @@ export default function Home() {
               <span className="relative z-10">Craft Burger Co.</span>
               <motion.div 
                 className="absolute -bottom-2 left-0 h-3 w-full rounded-lg -z-10"
-                style={{ backgroundColor: `${themeColors.secondary}50` }}
+                style={underlineStyle} // Use the consistent underline style
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ delay: 0.8, duration: 0.8 }}
@@ -371,44 +380,13 @@ export default function Home() {
             transition={{ delay: 0.5 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                to="/menu"
-                className="inline-block text-white px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors duration-200 text-sm sm:text-base md:text-lg relative overflow-hidden group hover:bg-[#660708]"
-                style={{ 
-                  backgroundColor: themeColors.primary,
-                  boxShadow: theme === 'light' 
-                    ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" 
-                    : "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
-                }}
-              >
-                <motion.span 
-                  className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"
-                />
-                Voir le menu
-              </Link>
-            </motion.div>
+            <ThemedButton to="/menu" variant="primary">
+              Voir le menu
+            </ThemedButton>
             
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                to="/restaurants"
-                className="inline-block border-2 px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors duration-200 text-sm sm:text-base md:text-lg relative overflow-hidden group"
-                style={{ 
-                  backgroundColor: theme === 'light' ? '#ffffff' : 'transparent',
-                  color: themeColors.primary,
-                  borderColor: themeColors.primary,
-                  boxShadow: theme === 'light' 
-                    ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" 
-                    : "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
-                }}
-              >
-                <motion.span 
-                  className="absolute inset-0 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"
-                  style={{ backgroundColor: `${themeColors.primary}10` }}
-                />
-                Nos restaurants
-              </Link>
-            </motion.div>
+            <ThemedButton to="/restaurants" variant="secondary">
+              Nos restaurants
+            </ThemedButton>
           </motion.div>
         </div>
       </motion.section>
@@ -465,7 +443,7 @@ export default function Home() {
               </h2>
               <motion.div 
                 className="absolute -bottom-2 left-0 h-2 w-full rounded-lg" 
-                style={{ backgroundColor: `${themeColors.secondary}50` }}
+                style={underlineStyle} // Use the consistent underline style
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 transition={{ delay: 0.4, duration: 0.8 }}
@@ -685,7 +663,7 @@ export default function Home() {
             <div className="flex justify-center mb-8">
               <motion.div 
                 className="h-1 w-20 rounded-full"
-                style={{ backgroundColor: `${themeColors.heading}40` }}
+                style={underlineStyle} // Use the consistent underline style
                 initial={{ width: 0 }}
                 whileInView={{ width: 80 }}
                 transition={{ delay: 0.4, duration: 0.8 }}

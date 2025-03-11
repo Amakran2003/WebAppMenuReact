@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Beef } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,6 @@ export default function SplashScreen({ onComplete, redirectTo }: SplashScreenPro
           setTimeout(() => {
             if (document.location.pathname.indexOf(cleanPath) === -1) {
               // If navigation didn't work, try direct location change as fallback
-              const basePath = import.meta.env.BASE_URL || '/';
               window.location.href = '#/' + cleanPath;
             }
           }, 300);

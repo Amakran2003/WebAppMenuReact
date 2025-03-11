@@ -1,0 +1,48 @@
+/* Mode clair (par défaut) */
+:root, html.light {
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --accent-color: #0066cc;
+    --border-color: #e1e1e1;
+    --card-background: #f9f9f9;
+    /* Ajoutez toutes vos variables de couleur ici */
+}
+
+/* Mode sombre via media query */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #121212;
+        --text-color: #f1f1f1;
+        --accent-color: #4d9cff;
+        --border-color: #444444;
+        --card-background: #1e1e1e;
+    }
+}
+
+/* Mode sombre explicite via classe (prioritaire) */
+html.dark {
+    --background-color: #121212 !important;
+    --text-color: #f1f1f1 !important;
+    --accent-color: #4d9cff !important;
+    --border-color: #444444 !important;
+    --card-background: #1e1e1e !important;
+}
+
+/* Mode clair explicite via classe (prioritaire) */
+html.light {
+    --background-color: #ffffff !important;
+    --text-color: #333333 !important;
+    --accent-color: #0066cc !important;
+    --border-color: #e1e1e1 !important;
+    --card-background: #f9f9f9 !important;
+}
+
+/* Appliquez ces variables dans votre CSS */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Assurez-vous que tous les éléments utilisent ces variables */
+// ...existing code...

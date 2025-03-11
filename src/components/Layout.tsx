@@ -97,7 +97,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="relative">
               <ThemeToggle />
               <span className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 dark:text-gray-400">
-                {theme === 'light' ? 'Jour' : 'Nuit'}
+                {theme === 'light'}
               </span>
             </div>
           </div>

@@ -8,6 +8,42 @@
     <meta name="color-scheme" content="light dark">
     <title>Craft Burger Co.</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+      /* Pre-load critical theme styles to prevent FOUC (Flash of Unstyled Content) */
+      :root {
+        --color-primary: #9b2226;
+        --color-primary-hover: #660708;
+      }
+      
+      body {
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      html.light body {
+        background-color: #ffffff;
+        color: #1a1a1a;
+      }
+      
+      html.dark body {
+        background-color: #121212;
+        color: #f5f5f5;
+      }
+      
+      /* Critical button styles */
+      .primary-button {
+        background-color: #9b2226;
+        color: white;
+      }
+      
+      .secondary-button {
+        border: 2px solid #9b2226;
+        color: #9b2226;
+      }
+      
+      html.dark .secondary-button {
+        background-color: #1e1e1e;
+      }
+    </style>
     <script>
       // Immediately apply the saved theme to prevent flash of default theme
       (function() {
@@ -15,6 +51,7 @@
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         const defaultTheme = savedTheme || (prefersDark ? 'dark' : 'light');
         
+        document.documentElement.classList.remove('dark', 'light');
         document.documentElement.classList.add(defaultTheme);
         
         // Update theme-color meta tag
@@ -23,14 +60,14 @@
           metaThemeColor.setAttribute('content', defaultTheme === 'dark' ? '#121212' : '#ffffff');
         }
         
-        // Apply theme class to body as well for additional selectors
-        if (defaultTheme === 'dark') {
-          document.documentElement.style.colorScheme = 'dark';
-        } else {
-          document.documentElement.style.colorScheme = 'light';
-        }
+        // Apply theme class to html and set color-scheme
+        document.documentElement.style.colorScheme = defaultTheme;
+        
+        console.log("Thème initial appliqué:", defaultTheme);
       })();
     </script>
+    <!-- Chargement anticipé du détecteur de thème -->
+    <script src="js/theme-detector.js"></script>
   </head>
   <body>
     <div id="root"></div>
