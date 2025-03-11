@@ -160,22 +160,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Footer - Show on all pages on desktop, hide on menu page on mobile */}
       {(!isMenuPage || (isMenuPage && isDesktop)) && (
-        <footer className="py-4 text-sm sm:text-base transition-colors duration-300"
+        <footer className="py-4 text-sm sm:text-base transition-colors duration-300 text-white"
                 style={{ 
                   backgroundColor: theme === 'light' ? themeColors.primary : '#1e1e1e',
-                  color: theme === 'light' ? '#ffffff' : '#f5f5f5'
+                  color: '#ffffff'
                 }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
             <p>&copy; 2025 Craft Burger Co. Tous droits réservés.</p>
             <div className="mt-2 sm:mt-0 flex space-x-4">
               <a href="#" 
-                 className="hover:underline"
-                 style={{ color: theme === 'light' ? '#ffffff' : '#f5f5f5' }}>
+                 className="hover:underline text-white"
+                 style={{ color: '#ffffff !important' }}>
                 Mentions légales
               </a>
               <a href="#" 
-                 className="hover:underline"
-                 style={{ color: theme === 'light' ? '#ffffff' : '#f5f5f5' }}>
+                 className="hover:underline text-white"
+                 style={{ color: '#ffffff !important' }}>
                 Politique de confidentialité
               </a>
             </div>
