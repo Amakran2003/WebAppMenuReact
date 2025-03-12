@@ -1,1 +1,1 @@
-https://amakran2003.github.io/WebAppMenuReact/
+https://amakran2003.github.io/CraftBurgerCo/
