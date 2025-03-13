@@ -6,20 +6,27 @@
   <title>Craft Burger Co.</title>
   <script type="text/javascript">
     (function() {
-      // On récupère le chemin actuel
-      var path = window.location.pathname;
+      // GitHub Pages SPA redirect
+      var repo = 'CraftBurgerCo';
+      var l = window.location;
       
-      // On crée la redirection vers la page d'index avec le hash
-      var redirectUrl = window.location.origin + 
-                       (path.indexOf('/WebAppMenuReact') === 0 ? '/WebAppMenuReact' : '') + 
-                       '/#' + path.replace('/WebAppMenuReact', '');
-      
-      // Log pour debug
-      console.log('Redirection depuis:', path);
-      console.log('Redirection vers:', redirectUrl);
-      
-      // Rediriger
-      window.location.replace(redirectUrl);
+      // Handle 404s by redirecting to the index with a hash route
+      // that the router can handle
+      if (l.pathname.split('/')[1] === repo) {
+        // We're already in the repo path, extract the rest of the path
+        var segments = l.pathname.split('/');
+        segments.splice(0, 2); // Remove "" and "CraftBurgerCo"
+        var path = '/' + segments.join('/');
+        
+        // Check if we have search parameters
+        var search = l.search || '';
+        
+        // Redirect to the home page with the path as hash
+        l.replace(l.origin + '/' + repo + '/#' + path + search);
+      } else {
+        // Direct redirect to the repo home
+        l.replace(l.origin + '/' + repo + '/');
+      }
     })();
   </script>
 </head>
@@ -28,7 +35,7 @@
     Redirection en cours...
   </p>
   <p style="text-align: center; font-family: Arial, sans-serif;">
-    <a href="/" style="color: #9b2226; text-decoration: underline;">
+    <a href="/CraftBurgerCo/" style="color: #9b2226; text-decoration: underline;">
       Cliquez ici si la redirection ne fonctionne pas
     </a>
   </p>
