@@ -1,8 +1,22 @@
+/**
+ * Layout Component
+ * 
+ * Main application layout wrapper that provides consistent structure across all pages.
+ * Features:
+ * - Responsive header with navigation
+ * - Mobile menu with animation
+ * - Theme-aware styling
+ * - Conditional footer (hidden on menu page on mobile)
+ * - DOM cleanup for any potential UI issues
+ * 
+ * Imported by:
+ * - App.tsx (wraps all page components)
+ */
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -26,30 +40,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return () => {
       window.removeEventListener('resize', checkIfDesktop);
     };
-  }, []);
-
-  // Clean up any potential DOM issues from previous basket implementation
-  useEffect(() => {
-    const ensureUsableUI = () => {
-      // Remove any potentially blocking overlays
-      document.querySelectorAll('.fixed.inset-0').forEach(el => {
-        if (el.parentElement) {
-          el.parentElement.removeChild(el);
-        }
-      });
-      
-      // Restore pointer events and scrolling
-      document.body.style.pointerEvents = 'auto';
-      document.body.style.overflow = 'visible';
-      
-      // Super-elevate navigation elements
-      document.querySelectorAll('a, button, .nav-item, .logo').forEach(el => {
-        el.setAttribute('style', 'z-index: 9999 !important; position: relative;');
-      });
-    };
-    
-    // Run immediately
-    ensureUsableUI();
   }, []);
 
   const navItems = [

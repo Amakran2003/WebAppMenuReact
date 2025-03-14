@@ -1,6 +1,17 @@
+/**
+ * MouseFollower Component
+ * 
+ * Creates a subtle circular element that follows the mouse cursor.
+ * Uses spring physics for smooth animation.
+ * Only visible on desktop devices (hidden on mobile).
+ * Theme-aware styling.
+ * 
+ * Imported by:
+ * - Home.tsx
+ */
 import { useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 function MouseFollower() {
   const { themeColors } = useTheme();

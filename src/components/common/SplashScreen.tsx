@@ -1,3 +1,20 @@
+/**
+ * SplashScreen Component
+ * 
+ * Initial loading screen shown when the app first loads or when explicitly triggered.
+ * Features:
+ * - Animated logo entrance
+ * - Theme-aware styling (adapts to light/dark mode)
+ * - Flexible navigation with callback or redirect options
+ * - Falls back to multiple navigation methods for broader browser compatibility
+ * 
+ * Props:
+ * - onComplete: Optional callback function when animation completes
+ * - redirectTo: Optional path to redirect to after animation
+ * 
+ * Imported by:
+ * - App.tsx (used in RootComponent and AppContent)
+ */
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Beef } from 'lucide-react';

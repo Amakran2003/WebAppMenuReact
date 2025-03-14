@@ -1,7 +1,20 @@
+/**
+ * NewsSection Component
+ * 
+ * Displays latest news and updates for the restaurant.
+ * Features:
+ * - Animated cards with hover effects
+ * - Theme-aware styling with different appearances in light and dark modes
+ * - Links to relevant menu items or other pages
+ * - Background decorations with animated elements
+ * 
+ * Imported by:
+ * - Home.tsx
+ */
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { newsItems } from '../data/menuData';
-import { useTheme } from '../context/ThemeContext';
+import { newsItems } from '../../data/menuData';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function NewsSection() {
   const { themeColors, theme } = useTheme();

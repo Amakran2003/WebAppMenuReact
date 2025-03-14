@@ -1,7 +1,27 @@
+/**
+ * ThemedButton Component
+ * 
+ * Reusable styled button component with theme awareness.
+ * Features:
+ * - Two variants: primary (filled) and secondary (outlined)
+ * - Animation effects on hover and click
+ * - Theme-aware styling
+ * - Advanced text effects on hover
+ * - Router Link integration
+ * 
+ * Props:
+ * - to: Route path for the Link component
+ * - variant: 'primary' | 'secondary'
+ * - children: React nodes to display inside the button
+ * 
+ * Imported by:
+ * - HeroSection.tsx
+ * - Various other components where buttons are needed
+ */
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 interface ThemedButtonProps {
   to: string;

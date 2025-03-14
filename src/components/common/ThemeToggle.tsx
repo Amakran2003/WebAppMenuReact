@@ -1,6 +1,20 @@
+/**
+ * ThemeToggle Component
+ * 
+ * Button component for toggling between light and dark themes.
+ * Features:
+ * - Animated icon transition (sun/moon)
+ * - Theme-aware styling
+ * - Accessibility support with screen reader text
+ * - Animation effects on hover and click
+ * - Debug logging for theme changes
+ * 
+ * Imported by:
+ * - Layout.tsx (used in the navigation header)
+ */
 import { motion } from 'framer-motion';
 import { Moon, Sun } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { useEffect } from 'react';
 
 export default function ThemeToggle() {

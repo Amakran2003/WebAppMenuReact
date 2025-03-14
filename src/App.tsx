@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import Layout from './components/Layout';
+import Layout from './components/common/Layout';
 import Home from './pages/Home';
 import Restaurants from './pages/Restaurants';
 import Menu from './pages/Menu';
 import Contact from './pages/Contact';
-import SplashScreen from './components/SplashScreen';
-import ScrollToTop from './components/ScrollToTop';
+import SplashScreen from './components/common/SplashScreen';
+import ScrollToTop from './components/common/ScrollToTop';
 import { ThemeProvider } from './context/ThemeContext';
 
 // Root component that shows the splash screen

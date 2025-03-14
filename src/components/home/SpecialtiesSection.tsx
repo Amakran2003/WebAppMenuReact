@@ -1,9 +1,22 @@
+/**
+ * SpecialtiesSection Component
+ * 
+ * Displays a horizontally scrollable list of restaurant specialties.
+ * Features:
+ * - Interactive card animations with mouse position-based 3D effects
+ * - Responsive design with different layouts for mobile and desktop
+ * - Navigation arrows for desktop and indicator dots for mobile
+ * - Links to the relevant menu items
+ * 
+ * Imported by:
+ * - Home.tsx
+ */
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { specialties } from '../data/menuData';
-import { useTheme } from '../context/ThemeContext';
+import { specialties } from '../../data/menuData';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function SpecialtiesSection() {
   const { themeColors, theme } = useTheme();
