@@ -135,7 +135,6 @@ export default function Menu() {
                       style={{
                         backgroundColor: themeColors.cardBackground,
                         boxShadow: item.id === highlightedItem ? `0 0 0 4px ${themeColors.primary}` : undefined,
-                        ringColor: item.id === highlightedItem ? themeColors.primary : undefined
                       }}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ 
