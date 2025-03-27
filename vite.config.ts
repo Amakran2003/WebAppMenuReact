@@ -1,9 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// Check if we're building for GitHub Pages
+const isGitHubPages = process.env.GITHUB_PAGES === 'true'
+const baseUrl = isGitHubPages ? '/CraftBurgerCo/' : './'
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // Utiliser un chemin relatif pour un déploiement flexible
+  base: baseUrl, // Use repo name for GitHub Pages, relative path for other deployments
   plugins: [react()],
   server: {
     // Improve mobile testing capabilities
